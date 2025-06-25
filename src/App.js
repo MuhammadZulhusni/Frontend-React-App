@@ -1,14 +1,19 @@
-// Import the React library, so can use JSX & React features
+// Import the React library to use JSX and create components
 import React from 'react';
 
-// Functional component called App
+// Import the TopBanner component that created earlier
+import TopBanner from './components/TopBanner/TopBanner';
+
+// Define a functional component called App
 function App() {
-  // The component returns some HTML-like code (JSX)
+  // This function returns JSX (looks like HTML), which is what will be shown on the web page
   return (
     <div>
+      {/* This is where we use the TopBanner component to display it on the page */}
+      <TopBanner />
     </div>
   );
 }
 
-// This makes the App component available to be used in other files
+// Export the App component so that other files (like index.js) can use it
 export default App;

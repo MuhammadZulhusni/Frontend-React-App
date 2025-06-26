@@ -3,6 +3,7 @@ import React from 'react';
 
 // Import the TopBanner component we made earlier
 import TopBanner from './components/TopBanner/TopBanner';
+import Services from './components/Services/Services';
 
 // Create a functional component named App
 function App() {
@@ -11,6 +12,7 @@ function App() {
     <div>
       {/* Show the TopBanner component here */}
       <TopBanner />
+      <Services />
     </div>
   );
 }

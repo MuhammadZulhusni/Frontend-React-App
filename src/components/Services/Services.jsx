@@ -9,10 +9,6 @@ import designIcon from '../../asset/image/design.png';
 import ecommerceIcon from '../../asset/image/ecommerce.png';
 import webIcon from '../../asset/image/web.png';
 
-// Import custom and Bootstrap styles
-import '../../asset/css/custom.css';
-import '../../asset/css/bootstrap.min.css';
-
 // Create a class component called Services
 class Services extends Component {
      render() {

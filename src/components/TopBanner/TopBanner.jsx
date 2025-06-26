@@ -4,10 +4,6 @@ import React, { Component, Fragment } from 'react'
 // Import layout and button components from react-bootstrap
 import { Col, Container, Row, Button } from 'react-bootstrap'
 
-// Import custom stylesheets
-import '../../asset/css/custom.css';
-import '../../asset/css/bootstrap.min.css';
-
 // Create a class component called TopBanner
 class TopBanner extends Component {
 

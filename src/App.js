@@ -4,6 +4,7 @@ import React from 'react';
 // Import the TopBanner component we made earlier
 import TopBanner from './components/TopBanner/TopBanner';
 import Services from './components/Services/Services';
+import TopNavigation from './components/TopNavigation/TopNavigation';
 
 // Create a functional component named App
 function App() {
@@ -11,6 +12,7 @@ function App() {
   return (
     <div>
       {/* Show the TopBanner component here */}
+      <TopNavigation />
       <TopBanner />
       <Services />
     </div>

@@ -139,3 +139,76 @@
      font-weight: 700;
      font-size: 16px;
 }
+
+.summaryBanner {
+  background-image: url("../image/summary.jpg");
+  min-height: 400px;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative; /* Ensure positioning context */
+}
+
+.summaryBannerOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100%;
+  background: rgba(27, 31, 92, 0.7);
+
+  /* Center everything inside */
+  display: flex;
+  align-items: center;  /* vertical centering */
+  justify-content: center; /* horizontal centering */
+  padding: 60px 0; /* top/bottom spacing */
+}
+
+.countNumber{
+     color: #ffffff;
+     font-family: 'Montserrat',sans-serif;
+     font-weight: 700;
+     font-size: 40px;
+}
+
+.countTitle{
+     color: #ffd900;
+     font-family: 'Raleway',sans-serif;
+     font-weight: 600;
+     font-size: 22px;
+}
+
+.cardTitle{
+     color: #000000;
+     font-family: 'Montserrat',sans-serif;
+     font-weight: 700;
+     font-size: 15px;
+}
+
+.cardSubTitle{
+     color: #000000;
+     font-family: 'Raleway',sans-serif;
+     font-weight: 600;
+     font-size: 14px;
+}
+
+.countSection {
+  padding-top: 50px;
+}
+
+.workCard{
+     margin-top: 5%;
+     padding: 10px 10px 10px 10px;
+     border-radius: 3px;
+}
+
+.iconBullent{
+     color: #051b35;
+     font-size: 16px;
+}
+
+.iconProject{
+     color: #ffffff;
+     font-size: 40px;
+}

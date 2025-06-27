@@ -6,6 +6,7 @@ import TopBanner from './components/TopBanner/TopBanner';
 import Services from './components/Services/Services';
 import TopNavigation from './components/TopNavigation/TopNavigation';
 import Analysis from './components/Analysis/Analysis';
+import Summary from './components/Summary/Summary';
 
 // Create a functional component named App
 function App() {
@@ -17,6 +18,7 @@ function App() {
       <TopBanner />
       <Services />
       <Analysis />
+      <Summary />
     </div>
   );
 }

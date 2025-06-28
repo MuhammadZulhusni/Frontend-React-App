@@ -1,38 +1,19 @@
-// Import React so we can use JSX and build components
+// Import React and BrowserRouter from react-router-dom
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 
-// Import the component we made
-import TopBanner from './components/TopBanner/TopBanner';
-import Services from './components/Services/Services';
-import TopNavigation from './components/TopNavigation/TopNavigation';
-import Analysis from './components/Analysis/Analysis';
-import Summary from './components/Summary/Summary';
-import RecentProject from './components/RecentProject/RecentProject';
-import Courses from './components/Courses/Courses';
-import Video from './components/Video/Video';
-import ClientReview from './components/ClientReview/ClientReview';
-import AboutMe from './components/AboutMe/AboutMe';
+// Import the AppRouter which contains all your defined routes
+import AppRouter from './router/AppRouter';
 
-// Create a functional component named App
+// Main App component
 function App() {
-  // Return some JSX (HTML-like code) to show on the web page
   return (
-    <div>
-      {/* Show the TopBanner component here */}
-      <TopNavigation />
-      <TopBanner />
-      <Services />
-      <Analysis />
-      <Summary />
-      <RecentProject />
-      <Courses />
-      <Video />
-      <ClientReview />
-      <AboutMe />
-      <Services />
-    </div>
+    // Wrap entire application in BrowserRouter 
+    // so that routing works throughout the app
+    <BrowserRouter>
+      <AppRouter />
+    </BrowserRouter>
   );
 }
 
-// Export this App component so it can be used in other files
 export default App;

@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 
+import { Link } from 'react-router-dom'
+
 class Courses extends Component {
   render() {
     return (
@@ -35,7 +37,7 @@ class Courses extends Component {
                   <p className="text-justify serviceDescription">
                     Some quick example text to build on the card title and make up the bulk of the card's content.
                   </p>
-                  <a className="courseViewMore float-left" href="/course-details">View Details</a>
+                  <Link className="courseViewMore float-left" to="/coursedetails" >View Details</Link>
                 </Col>
 
                 {/* Course 2 - Image */}
@@ -53,7 +55,7 @@ class Courses extends Component {
                   <p className="text-justify serviceDescription">
                     Some quick example text to build on the card title and make up the bulk of the card's content.
                   </p>
-                  <a className="courseViewMore float-left" href="/course-details">View Details</a>
+                  <Link className="courseViewMore float-left" to="/coursedetails" >View Details</Link>
                 </Col>
               </Row>
             </Col>
@@ -76,7 +78,7 @@ class Courses extends Component {
                   <p className="text-justify serviceDescription">
                     Some quick example text to build on the card title and make up the bulk of the card's content.
                   </p>
-                  <a className="courseViewMore float-left" href="/course-details">View Details</a>
+                  <Link className="courseViewMore float-left" to="/coursedetails" >View Details</Link>
                 </Col>
 
                 {/* Course 4 - Image */}
@@ -94,7 +96,7 @@ class Courses extends Component {
                   <p className="text-justify serviceDescription">
                     Some quick example text to build on the card title and make up the bulk of the card's content.
                   </p>
-                  <a className="courseViewMore float-left" href="/course-details">View Details</a>
+                  <Link className="courseViewMore float-left" to="/coursedetails" >View Details</Link>
                 </Col>
               </Row>
             </Col>

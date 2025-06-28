@@ -2,6 +2,8 @@
 import React, { Component, Fragment } from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
 
+import { Link } from 'react-router-dom'
+
 // AllCourses component to display a list of course cards
 class AllCourses extends Component {
      render() {
@@ -34,7 +36,7 @@ class AllCourses extends Component {
                                              <p className="text-justify serviceDescription">
                                                   Some quick example text to build on the card title and make up the bulk of the card's content.
                                              </p>
-                                             <a className="courseViewMore float-left" href="#">View Details</a>
+                                             <Link className="courseViewMore float-left" to="/coursedetails" >View Details</Link>
                                         </Col>
 
                                         {/* Second Course */}
@@ -50,7 +52,7 @@ class AllCourses extends Component {
                                              <p className="text-justify serviceDescription">
                                                   Some quick example text to build on the card title and make up the bulk of the card's content.
                                              </p>
-                                             <a className="courseViewMore float-left" href="#">View Details</a>
+                                             <Link className="courseViewMore float-left" to="/coursedetails" >View Details</Link>
                                         </Col>
 
                                         {/* Third Course */}
@@ -66,7 +68,7 @@ class AllCourses extends Component {
                                              <p className="text-justify serviceDescription">
                                                   Some quick example text to build on the card title and make up the bulk of the card's content.
                                              </p>
-                                             <a className="courseViewMore float-left" href="#">View Details</a>
+                                             <Link className="courseViewMore float-left" to="/coursedetails" >View Details</Link>
                                         </Col>
                                    </Row>
                               </Col>
@@ -87,7 +89,7 @@ class AllCourses extends Component {
                                              <p className="text-justify serviceDescription">
                                                   Some quick example text to build on the card title and make up the bulk of the card's content.
                                              </p>
-                                             <a className="courseViewMore float-left" href="#">View Details</a>
+                                             <Link className="courseViewMore float-left" to="/coursedetails" >View Details</Link>
                                         </Col>
 
                                         {/* Second Course */}
@@ -103,7 +105,7 @@ class AllCourses extends Component {
                                              <p className="text-justify serviceDescription">
                                                   Some quick example text to build on the card title and make up the bulk of the card's content.
                                              </p>
-                                             <a className="courseViewMore float-left" href="#">View Details</a>
+                                             <Link className="courseViewMore float-left" to="/coursedetails" >View Details</Link>
                                         </Col>
 
                                         {/* Third Course */}
@@ -119,7 +121,7 @@ class AllCourses extends Component {
                                              <p className="text-justify serviceDescription">
                                                   Some quick example text to build on the card title and make up the bulk of the card's content.
                                              </p>
-                                             <a className="courseViewMore float-left" href="#">View Details</a>
+                                             <Link className="courseViewMore float-left" to="/coursedetails" >View Details</Link>
                                         </Col>
                                    </Row>
                               </Col>

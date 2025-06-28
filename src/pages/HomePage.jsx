@@ -22,7 +22,7 @@ class HomePage extends Component {
              <Fragment>
 
                {/* Top navigation bar */}
-               <TopNavigation />
+               <TopNavigation title="Easy Learning Page" /> 
 
                {/* Top banner section */}
                <TopBanner />

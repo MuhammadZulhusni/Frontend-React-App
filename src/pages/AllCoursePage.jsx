@@ -14,7 +14,7 @@ class AllCoursePage extends Component {
                // Fragment wraps everything without adding extra DOM elements
                <Fragment>
                     {/* Top navigation bar */}
-                    <TopNavigation />
+                    <TopNavigation title="All Courses" /> 
 
                     {/* Page top section with title "All Courses" */}
                     <PageTop pagetitle="All Courses" />

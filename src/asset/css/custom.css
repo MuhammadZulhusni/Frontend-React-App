@@ -604,3 +604,88 @@ a.twitter{
   color: #28a745;
   margin-right: 10px;
 }
+
+/* Course Title */
+.courseDetailsTitle {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  color: #051b35;
+  font-size: 35px;
+  margin-bottom: 20px;
+}
+
+/* Course Image */
+.courseDetailsImg {
+  width: 100%;
+  border-radius: 10px;
+}
+
+/* Description Text */
+.courseDescription {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 500;
+  color: #333;
+  font-size: 16px;
+  line-height: 1.7;
+  text-align: justify;
+}
+
+/* Course Sidebar Box */
+.widgetFeature {
+  border: 1px solid #cbd6e2;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+/* Sidebar Title */
+.widgetTitle {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  margin: 20px 0;
+}
+
+/* Feature List */
+.featureList {
+  list-style: none;
+  padding: 0 25px 20px;
+  margin: 0;
+}
+
+.featureList li {
+  color: #051b35;
+  font-size: 16px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.featureList li span {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  color: #000;
+  margin-right: 5px;
+}
+
+/* Icon Styling */
+.iconBullet {
+  color: #ffc107;
+  margin-right: 10px;
+}
+
+/* Price & Button Area */
+.priceWrap {
+  background-color: #e3f2fd;
+  padding: 30px 20px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  color: #051b35;
+  font-size: 18px;
+  border-top: 1px solid #cbd6e2;
+}
+
+.priceWrap span {
+  color: #e53935;
+  font-weight: bold;
+}

@@ -64,9 +64,12 @@ class TopNavigation extends Component {
         >
           {/* Add some horizontal padding by wrapping with a container */}
           <div className="container">
-            <Navbar.Brand className={this.state.navBarTitle} href="#home">
-              <img src={this.state.navBarLogo} alt="Logo" />
+            <Navbar.Brand className={this.state.navBarTitle}>
+              <NavLink to="/">
+                <img src={this.state.navBarLogo} alt="Logo" style={{ height: '40px' }} />
+              </NavLink>
             </Navbar.Brand>
+
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="mx-auto d-flex gap-4">

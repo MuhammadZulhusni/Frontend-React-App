@@ -1,12 +1,12 @@
 import React from 'react';
-import AllCoursePage from './pages/AllCoursePage';
+import PortfolioPage from './pages/PortfolioPage';
  
 
 function App() {
   return (
     <div>
     
-     <AllCoursePage />
+     <PortfolioPage />
       
     </div>
   );

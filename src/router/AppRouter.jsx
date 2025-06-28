@@ -10,6 +10,7 @@ import ContactPage from '../pages/ContactPage'
 import HomePage from '../pages/HomePage'
 import PortfolioPage from '../pages/PortfolioPage'
 import RefundPage from '../pages/RefundPage';
+import TremsPage from '../pages/TremsPage';
 
 // Define AppRouter class component
 class AppRouter extends Component {
@@ -41,6 +42,9 @@ class AppRouter extends Component {
 
                          {/* Route for Refund (Footer) */}
                          <Route path="/refund" element={<RefundPage />} />
+
+                         {/* Route for Trems (Footer) */}
+                         <Route path="/trems" element={<TremsPage />} />
 
                     </Routes>
                </Fragment>

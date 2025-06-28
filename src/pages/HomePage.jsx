@@ -13,6 +13,7 @@ import Video from '../components/Video/Video';
 import ClientReview from '../components/ClientReview/ClientReview';
 import AboutMe from '../components/AboutMe/AboutMe';
 import Footer from '../components/Footer/Footer';
+import Welcome from '../components/Welcome/Welcome';
 
 // HomePage component
 class HomePage extends Component {
@@ -26,6 +27,9 @@ class HomePage extends Component {
 
                {/* Top banner section */}
                <TopBanner />
+
+               {/* Welcome Section */}
+               <Welcome /> 
 
                {/* Services section */}
                <Services />

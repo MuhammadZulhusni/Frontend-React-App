@@ -11,6 +11,8 @@ import { faTwitter } from '@fortawesome/free-brands-svg-icons'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faPhone } from '@fortawesome/free-solid-svg-icons'
 
+import {BrowserRouter as Router,Switch, Route, Link} from "react-router-dom";
+
 class Footer extends Component {
   render() {
     return (
@@ -61,7 +63,7 @@ class Footer extends Component {
             {/* Policy Links */}
             <Col lg="3" md={6} sm={12} className="p-5 text-justify">
               <h2 className="footerName">Policy</h2>
-              <a className="footerLink" href="#">Refund Policy</a> <br />
+              <Link className="footerLink" to="/refund">Refund Policy</Link> <br></br>
               <a className="footerLink" href="#">Terms and Conditions</a> <br />
               <a className="footerLink" href="#">Privacy Policy</a> <br />
             </Col>

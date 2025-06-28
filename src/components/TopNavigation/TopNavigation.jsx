@@ -1,138 +1,147 @@
-// Import React and required components
-import React, { Component, Fragment } from 'react';
-
-// Import Bootstrap Navbar components
-import { Navbar, Nav, Container } from 'react-bootstrap';
-
-// Import logo images
+import React, { Component, Fragment } from 'react'
+import { Navbar, Nav } from 'react-bootstrap'
 import whiteLogo from '../../asset/image/logo_white.png';
 import blackLogo from '../../asset/image/logo_black.png';
-
-// Import custom and bootstrap CSS
 import '../../asset/css/custom.css';
 import '../../asset/css/bootstrap.min.css';
+import { NavLink } from "react-router-dom"
 
-// Import NavLink from react-router-dom for client-side routing
-import {NavLink} from "react-router-dom"
-
-// Create a class component named TopNavigation
 class TopNavigation extends Component {
-  constructor() {
+
+  constructor(props) {
     super();
-    // Set the initial state for navbar styling
     this.state = {
-      navBarTitle: 'navTitle',          // Navbar text class
-      navBarLogo: whiteLogo,            // Logo image
-      navBarBack: 'navBackground',      // Navbar background class
-      navBarItem: 'navItem',            // Nav link class
-    };
+      navBarTitle: "navTitle",                // Title style class
+      navBarLogo: [whiteLogo],                // Default logo image
+      navVariant: "dark",                     // Navbar color scheme (dark/light)
+      navBarBack: "navBackground",            // Default navbar background class
+      navBarItem: "navItem",                  // Link item class
+      pageTitle: props.title                  // Page-specific title from props
+    }
   }
 
-  // Function to change navbar style when scrolling
+  // Change navbar style when scrolling
   onScroll = () => {
     if (window.scrollY > 100) {
-      // If scroll down more than 100px, update navbar style
+      // When scrolled down: switch to light mode & black logo
       this.setState({
         navBarTitle: 'navTitleScroll',
-        navBarLogo: blackLogo,
+        navBarLogo: [blackLogo],
         navBarBack: 'navBackgroundScroll',
         navBarItem: 'navItemScroll',
+        navVariant: 'light'
       });
-    } else {
-      // If scroll up to top, reset to default style
+    } else if (window.scrollY < 100) {
+      // When at top: switch to dark mode & white logo
       this.setState({
         navBarTitle: 'navTitle',
-        navBarLogo: whiteLogo,
+        navBarLogo: [whiteLogo],
         navBarBack: 'navBackground',
         navBarItem: 'navItem',
+        navVariant: 'dark'
       });
     }
-  };
-
-  // This runs when component is ready — add scroll listener
-  componentDidMount() {
-    window.addEventListener('scroll', this.onScroll);
   }
 
-  // Render the navbar
+  // Set up scroll listener after component mounts
+  componentDidMount() {
+    window.addEventListener('scroll', this.onScroll)
+  }
+
   render() {
     return (
       <Fragment>
-        {/* Navbar container with dynamic background class */}
+        {/* Dynamically set the page title */}
+        <title>{this.state.pageTitle}</title>
+
+        {/* Main Navbar */}
         <Navbar
-          className={`${this.state.navBarBack} shadow-sm py-2`} // Add shadow and padding
-          collapseOnSelect // Collapse menu on select (for mobile)
-          fixed="top"      // Stick navbar at the top
-          expand="lg"      // Expand menu on large screens
-          variant="dark"   // Use dark Bootstrap theme
+          className={this.state.navBarBack}
+          collapseOnSelect
+          fixed="top"
+          expand="lg"
+          variant={this.state.navVariant}
         >
-          <Container>
-            {/* Brand logo with dynamic class */}
+          {/* Add some horizontal padding by wrapping with a container */}
+          <div className="container">
             <Navbar.Brand className={this.state.navBarTitle} href="#home">
-              <img
-                src={this.state.navBarLogo}       // Show white or black logo
-                alt="logo"
-                style={{ height: '45px', marginRight: '10px' }} // Resize logo
-              />
+              <img src={this.state.navBarLogo} alt="Logo" />
             </Navbar.Brand>
-
-            {/* Toggle button for small screens */}
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-
-            {/* Navigation links section */}
             <Navbar.Collapse id="responsive-navbar-nav">
-              {/* Right-aligned links with spacing */}
-              <Nav className="ms-auto d-flex gap-4">
-                {/* Home link */}
+              <Nav className="mx-auto d-flex gap-4">
                 <Nav.Link>
-                  {/* NavLink allows active route highlighting and SPA behavior */}
-                  <NavLink className={this.state.navBarItem} to="/">
+                  <NavLink
+                    to="/"
+                    className={({ isActive }) =>
+                      isActive ? `${this.state.navBarItem} activeNav` : this.state.navBarItem
+                    }
+                  >
                     HOME
                   </NavLink>
                 </Nav.Link>
 
-                {/* About link */}
                 <Nav.Link>
-                  <NavLink className={this.state.navBarItem} to="/about">
+                  <NavLink
+                    to="/about"
+                    className={({ isActive }) =>
+                      isActive ? `${this.state.navBarItem} activeNav` : this.state.navBarItem
+                    }
+                  >
                     ABOUT
                   </NavLink>
                 </Nav.Link>
 
-                {/* Services link */}
                 <Nav.Link>
-                  <NavLink className={this.state.navBarItem} to="/service">
+                  <NavLink
+                    to="/service"
+                    className={({ isActive }) =>
+                      isActive ? `${this.state.navBarItem} activeNav` : this.state.navBarItem
+                    }
+                  >
                     SERVICE
                   </NavLink>
                 </Nav.Link>
 
-                {/* Courses link */}
                 <Nav.Link>
-                  <NavLink className={this.state.navBarItem} to="/course">
+                  <NavLink
+                    to="/course"
+                    className={({ isActive }) =>
+                      isActive ? `${this.state.navBarItem} activeNav` : this.state.navBarItem
+                    }
+                  >
                     COURSES
                   </NavLink>
                 </Nav.Link>
 
-                {/* Portfolio link */}
                 <Nav.Link>
-                  <NavLink className={this.state.navBarItem} to="/porfolio">
+                  <NavLink
+                    to="/porfolio"
+                    className={({ isActive }) =>
+                      isActive ? `${this.state.navBarItem} activeNav` : this.state.navBarItem
+                    }
+                  >
                     PORTFOLIO
                   </NavLink>
                 </Nav.Link>
 
-                {/* Contact link */}
                 <Nav.Link>
-                  <NavLink className={this.state.navBarItem} to="/contact">
+                  <NavLink
+                    to="/contact"
+                    className={({ isActive }) =>
+                      isActive ? `${this.state.navBarItem} activeNav` : this.state.navBarItem
+                    }
+                  >
                     CONTACT US
                   </NavLink>
                 </Nav.Link>
               </Nav>
             </Navbar.Collapse>
-          </Container>
+          </div>
         </Navbar>
       </Fragment>
-    );
+    )
   }
 }
 
-// Export this component to use in App.js
 export default TopNavigation;

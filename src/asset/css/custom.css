@@ -605,6 +605,8 @@ a.twitter{
   margin-right: 10px;
 }
 
+
+
 /* Course Title */
 .courseDetailsTitle {
   font-family: 'Montserrat', sans-serif;
@@ -644,6 +646,7 @@ a.twitter{
   font-weight: 700;
   font-size: 22px;
   margin: 20px 0;
+  text-align: center;
 }
 
 /* Feature List */

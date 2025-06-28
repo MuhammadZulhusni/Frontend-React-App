@@ -1,45 +1,47 @@
-// Import React and necessary routing components
+// Import React and necessary modules
 import React, { Component, Fragment } from 'react'
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Routes, Route } from 'react-router-dom' // React Router v6 components
 
-// Import all required page components
-import AllCourses from '../components/AllCourses/AllCourses';
-import AboutPage from '../pages/AboutPage';
-import AllServicePage from '../pages/AllServicePage';
-import ContactPage from '../pages/ContactPage';
-import HomePage from '../pages/HomePage';
-import PortfolioPage from '../pages/PortfolioPage';
+// Import all the page components
+import AboutPage from '../pages/AboutPage'
+import AllCoursePage from '../pages/AllCoursePage'
+import AllServicePage from '../pages/AllServicePage'
+import ContactPage from '../pages/ContactPage'
+import HomePage from '../pages/HomePage'
+import PortfolioPage from '../pages/PortfolioPage'
 
-// AppRouter component to manage routes for the application
+// Define AppRouter class component
 class AppRouter extends Component {
      render() {
           return (
-               // Fragment to wrap routing structure without adding extra DOM elements
+               // Fragment wraps everything without adding extra DOM nodes
                <Fragment>
-                    {/* Switch renders the first matching route only */}
-                    <Switch>
-                         {/* Route for homepage */}
-                         <Route exact path="/" component={HomePage} />
-                         
-                         {/* Route for services page */}
-                         <Route exact path="/service" component={AllServicePage} />
-                         
-                         {/* Route for courses page */}
-                         <Route exact path="/course" component={AllCourses} />
-                         
-                         {/* Route for portfolio/projects page */}
-                         <Route exact path="/porfolio" component={PortfolioPage} />
-                         
-                         {/* Route for about page */}
-                         <Route exact path="/about" component={AboutPage} />
-                         
-                         {/* Route for contact page */}
-                         <Route exact path="/contact" component={ContactPage} /> 
-                    </Switch>
+
+                    {/* Define all route paths using Routes (v6) */}
+                    <Routes>
+
+                         {/* Route for Home page */}
+                         <Route path="/" element={<HomePage />} />
+
+                         {/* Route for Services page */}
+                         <Route path="/service" element={<AllServicePage />} />
+
+                         {/* Route for Courses page */}
+                         <Route path="/course" element={<AllCoursePage />} />
+
+                         {/* Route for Portfolio page */}
+                         <Route path="/porfolio" element={<PortfolioPage />} />
+
+                         {/* Route for About page */}
+                         <Route path="/about" element={<AboutPage />} />
+
+                         {/* Route for Contact page */}
+                         <Route path="/contact" element={<ContactPage />} />
+
+                    </Routes>
                </Fragment>
           )
      }
 }
 
-// Export the router component for use in main App.js
 export default AppRouter

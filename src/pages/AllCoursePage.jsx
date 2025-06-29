@@ -9,6 +9,11 @@ import TopNavigation from '../components/TopNavigation/TopNavigation'
 
 // AllCoursePage component displays the full "All Courses" page
 class AllCoursePage extends Component {
+
+     componentDidMount(){
+          window.scroll(0,0)
+      }
+
      render() {
           return (
                // Fragment wraps everything without adding extra DOM elements

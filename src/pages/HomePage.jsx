@@ -17,6 +17,11 @@ import Welcome from '../components/Welcome/Welcome';
 
 // HomePage component
 class HomePage extends Component {
+
+     componentDidMount(){
+          window.scroll(0,0)
+      }
+
      render() {
           return (
              // Fragment is used to group multiple components without adding extra DOM elements

@@ -11,6 +11,11 @@ import TopNavigation from '../components/TopNavigation/TopNavigation'
 
 // AboutPage component displays the full About Us page
 class AboutPage extends Component {
+
+     componentDidMount(){
+          window.scroll(0,0)
+      }
+
      render() {
           return (
                // Fragment wraps all elements without adding extra tags to the DOM

@@ -5,6 +5,11 @@ import TopNavigation from '../components/TopNavigation/TopNavigation'
 import TremsDescription from '../components/TremsDescription/TremsDescription'
 
  class TremsPage extends Component {
+
+     componentDidMount(){
+          window.scroll(0,0)
+      }
+      
      render() {
           return (
              <Fragment>

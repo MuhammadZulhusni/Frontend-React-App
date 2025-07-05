@@ -1,50 +1,61 @@
-// Import React and some tools needed to build the component
+// Import necessary tools from React
 import React, { Component, Fragment } from 'react'
 
 // Import layout and button components from react-bootstrap
 import { Col, Container, Row, Button } from 'react-bootstrap'
 
+// Import API helper files
+import RestClient from '../../RestAPI/RestClient';
+import AppUrl from '../../RestAPI/AppUrl';
+
+// Import axios for HTTP requests (not used here, but imported)
 import axios from 'axios';
 
-// Create a class component called TopBanner
+// Create a React class component called TopBanner
 class TopBanner extends Component {
 
-    // This method runs automatically when the component is mounted (inserted into the DOM)
-    componentDidMount() {
-    // Send a GET request to the Laravel API endpoint to get homepage title data
-    axios.get('http://127.0.0.1:8000/api/homepage/title')
-        .then(function (response) {    
-        // If successful, log the response data to the console
-        console.log(response.data);
-        })
-        .catch(function (error) {
-        // If there's an error, log the error to the console
-        console.log(error);
+    // Constructor to set initial state
+    constructor(){
+        super();
+        this.state={
+            title:"",     // Title text from API
+            subtitle:""   // Subtitle text from API
+        }
+    }
+
+    // This runs after the component is shown on the screen
+    componentDidMount(){
+        // Get data from API and update the state
+        RestClient.GetRequest(AppUrl.HomeTopTitle).then(result=>{
+            this.setState({
+                title: result[0]['home_title'],
+                subtitle: result[0]['home_subtitle']
+            });
         });
     }
 
-    // render() decides what to show on the screen
+    // This decides what will be shown in the browser
     render() {
         return (
-            // Fragment lets us return multiple elements without adding extra tags
+            // Fragment lets us return multiple elements without extra HTML tag
             <Fragment>
-                {/* Container holds everything and makes it full width */}
+
+                {/* Full-width banner section */}
                 <Container fluid={true} className="topFixedBanner p-0">
                     
-                    {/* Dark overlay on top of the banner image */}
+                    {/* Dark overlay over the banner image */}
                     <div className="topBannerOverlay">
                         
-                        {/* Inner container for centering the content */}
+                        {/* Inner container to center the text content */}
                         <Container className="topContent">
                             <Row>
                                 <Col className="text-center">
-                                    {/* Main title */}
-                                    <h1 className="topTitle">EASY LEARNING</h1>
+
+                                    {/* Dynamic title and subtitle from API */}
+                                    <h1 className="topTitle">{this.state.title}</h1>
+                                    <h4 className="topSubTitle">{this.state.subtitle}</h4>
                                     
-                                    {/* Subtitle */}
-                                    <h4 className="topSubTitle">Learn Profesionally</h4>
-                                    
-                                    {/* Bootstrap button */}
+                                    {/* A button below the text */}
                                     <Button variant="primary">Learn More</Button>
                                 </Col>
                             </Row>
@@ -57,5 +68,5 @@ class TopBanner extends Component {
     }
 }
 
-// Make this component available to be used in other files
+// Export this component so other files can use it
 export default TopBanner

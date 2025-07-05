@@ -4,7 +4,10 @@
 class AppUrl {
 
     // Base URL for the Laravel backend API
-    static BaseURL = 'http://127.0.0.1:8000/api';
+    // Local
+    // static BaseURL = 'http://127.0.0.1:8000/api';
+    // Production
+    static BaseURL = 'https://rapi.get-virtual-admin.com/api';
 
     // Homepage-related endpoints
     static HomeTopTitle = this.BaseURL + '/homepage/title';

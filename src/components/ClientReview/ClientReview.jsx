@@ -1,29 +1,53 @@
-import React, { Component, Fragment } from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
+// Import React and needed components
+import React, { Component, Fragment } from 'react'
+import { Col, Container, Row } from 'react-bootstrap'
 
-// Slick carousel CSS styles
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+// Import Slick carousel styles
+import "slick-carousel/slick/slick.css" 
+import "slick-carousel/slick/slick-theme.css"
 
-// Import Slick slider component
-import Slider from "react-slick";
+// Import Slider component from react-slick
+import Slider from "react-slick"
 
+// Import API helper files
+import RestClient from '../../RestAPI/RestClient';
+import AppUrl from '../../RestAPI/AppUrl';
+
+// Create a class component called ClientReview
 class ClientReview extends Component {
+
+  // Set initial state
+  constructor(){
+    super();
+    this.state = {
+      myData: [] // This will hold the client review data from API
+    }
+  }
+
+  // This function runs after the component is added to the page
+  componentDidMount(){
+    // Fetch client review data from the API
+    RestClient.GetRequest(AppUrl.ClientReview).then(result => {
+      this.setState({ myData: result });
+    }) 
+  }
+
+  // This function decides what to display on the page
   render() {
-    // Slider settings
+    // Slider configuration settings
     var settings = {
-      autoPlaySpeed: 3000,           // Speed between slides
-      autoPlay: true,                // Auto play enabled
-      dots: true,                    // Show navigation dots
-      infinite: true,                // Infinite looping
-      speed: 3000,                   // Slide animation speed
-      arrows: false,                 // Hide navigation arrows
-      vertical: true,                // Vertical sliding
-      verticalSwiping: true,         // Enable swipe vertically
-      slidesToShow: 1,               // Show 1 review at a time
-      slidesToScroll: 1,             // Scroll 1 slide at a time
-      initialSlide: 1,               // Start from second slide (index 1)
-      responsive: [                  // Responsive behavior for different screen sizes
+      autoPlaySpeed: 3000,
+      autoPlay: true,
+      dots: true,
+      infinite: true,
+      speed: 3000,
+      arrows: false,
+      vertical: true,
+      verticalSwiping: true,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      initialSlide: 1,
+      responsive: [
         {
           breakpoint: 1024,
           settings: {
@@ -49,75 +73,48 @@ class ClientReview extends Component {
           }
         }
       ]
-    };
+    }
 
+    // Store API response
+    const MyList = this.state.myData;
+
+    // Generate slider views for each client review
+    const MyView = MyList.map(MyList => {
+      return (
+        <div>
+          {/* Centered row for each review */}
+          <Row className="text-center justify-content-center">
+            <Col lg={6} md={6} sm={12}>
+              {/* Client image, name, and review text */}
+              <img className="circleImg" src={MyList.client_img} />
+              <h2 className="reviewName">{MyList.client_title}</h2>
+              <p className="reviewDescription">{MyList.client_description}</p>
+            </Col>
+          </Row>
+        </div>
+      )
+    })
+
+    // Return the full layout
     return (
       <Fragment>
-        {/* Main container with background */}
+        {/* Main container with background and center alignment */}
         <Container fluid={true} className="siderBack text-center">
+
           {/* Section title */}
           <h1 className="reviewMainTitle p-3">TESTIMONIAL</h1>
-          <div className="reviewbottom"></div>
+          <div className="reviewbottom"></div> 
 
-          {/* Slick carousel with reviews */}
+          {/* Slick slider with reviews */}
           <Slider {...settings}>
-
-            {/* Review 1 */}
-            <div>
-              <Row className="text-center justify-content-center">
-                <Col lg={6} md={6} sm={12}>
-                  <img
-                    className="circleImg"
-                    src="https://image.freepik.com/free-photo/handsome-young-man-with-new-stylish-haircut_176420-19637.jpg"
-                    alt="Client review"
-                  />
-                  <h2 className="reviewName">Kazi Ariyan</h2>
-                  <p className="reviewDescription">
-                    Hi! I'm Kazi Ariyan. I'm a web developer with a serious love for teaching. I am a founder of eLe easy Learning and a passionate Web Developer, Programmer & Instructor.
-                  </p>
-                </Col>
-              </Row>
-            </div>
-
-            {/* Review 2 */}
-            <div>
-              <Row className="text-center justify-content-center">
-                <Col lg={6} md={6} sm={12}>
-                  <img
-                    className="circleImg"
-                    src="https://image.freepik.com/free-photo/portrait-white-man-isolated_53876-40306.jpg"
-                    alt="Client review"
-                  />
-                  <h2 className="reviewName">Jack Ma</h2>
-                  <p className="reviewDescription">
-                    Hi! I'm Kazi Ariyan. I'm a web developer with a serious love for teaching. I am a founder of eLe easy Learning and a passionate Web Developer, Programmer & Instructor.
-                  </p>
-                </Col>
-              </Row>
-            </div>
-
-            {/* Review 3 */}
-            <div>
-              <Row className="text-center justify-content-center">
-                <Col lg={6} md={6} sm={12}>
-                  <img
-                    className="circleImg"
-                    src="https://image.freepik.com/free-photo/curly-man-with-broad-smile-shows-perfect-teeth-being-amused-by-interesting-talk-has-bushy-curly-dark-hair-stands-indoor-against-white-blank-wall_273609-17092.jpg"
-                    alt="Client review"
-                  />
-                  <h2 className="reviewName">Jhon</h2>
-                  <p className="reviewDescription">
-                    Hi! I'm Kazi Ariyan. I'm a web developer with a serious love for teaching. I am a founder of eLe easy Learning and a passionate Web Developer, Programmer & Instructor.
-                  </p>
-                </Col>
-              </Row>
-            </div>
-
+            {MyView}
           </Slider>
+
         </Container>
       </Fragment>
-    );
+    )
   }
 }
 
-export default ClientReview;
+// Export the component so it can be used in other files
+export default ClientReview

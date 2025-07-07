@@ -1,72 +1,80 @@
-// Import React and required components
 import React, { Component, Fragment } from 'react';
-// Import layout components from React Bootstrap
 import { Col, Container, Row } from 'react-bootstrap';
-// Import chart components from Recharts
-import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis } from 'recharts';
+import {
+  Bar,
+  BarChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  CartesianGrid,
+} from 'recharts';
+import RestClient from '../../RestAPI/RestClient';
+import AppUrl from '../../RestAPI/AppUrl';
 
-// Create a class component named Analysis
 class Analysis extends Component {
   constructor() {
     super();
-    // Set initial data for the bar chart
     this.state = {
-      data: [
-        { Techonology: 'PHP', Projects: 100 },
-        { Techonology: 'MySqli', Projects: 90 },
-        { Techonology: 'Laravel', Projects: 95 },
-        { Techonology: 'React', Projects: 85 },
-        { Techonology: 'Opencart', Projects: 80 },
-        { Techonology: 'Vue Js', Projects: 70 },
-        { Techonology: 'Django', Projects: 60 },
-        { Techonology: 'JavaScript', Projects: 100 },
-      ],
+      data: [],
+      loading: true,
     };
   }
 
-  // Render the component UI
+  componentDidMount() {
+    RestClient.GetRequest(AppUrl.ChartData)
+      .then((result) => {
+        const formattedData = result.map((item) => ({
+          Technology: item.x_data,
+          Projects: parseInt(item.y_data),
+        }));
+        this.setState({ data: formattedData, loading: false });
+      })
+      .catch((error) => {
+        console.error('Error fetching chart data:', error);
+        this.setState({ loading: false });
+      });
+  }
+
   render() {
-    const blue = '#051b35'; // Bar color
+    const barColor = '#0d6efd'; // Bootstrap primary color
 
     return (
       <Fragment>
-        {/* Main container with center text */}
-        <Container className="text-center">
-          {/* Title */}
+        <Container className="py-5 text-center">
           <h1 className="serviceMainTitle">TECHNOLOGY USED</h1>
           <div className="bottom"></div>
 
-          {/* Layout row: chart on left, text on right */}
-          <Row className="justify-content-center align-items-center">
-            
-            {/* Left column: Bar chart */}
-            <Col lg={6} md={12} sm={12} className="mb-4" style={{ height: '300px' }}>
-              {/* Responsive container makes chart fit its parent */}
-              <ResponsiveContainer width="100%" height="100%">
-                {/* Create bar chart */}
-                <BarChart data={this.state.data}>
-                  {/* Show X-axis with technology names */}
-                  <XAxis dataKey="Techonology" />
-                  {/* Show tooltip when hover */}
-                  <Tooltip />
-                  {/* Bar represents project count */}
-                  <Bar dataKey="Projects" fill={blue} />
-                </BarChart>
-              </ResponsiveContainer>
+          <Row className="align-items-center">
+            {/* Chart section */}
+            <Col lg={6} md={12} className="mb-4">
+              {this.state.loading ? (
+                <p>Loading chart...</p>
+              ) : (
+                <div style={{ width: '100%', height: '300px' }}>
+                  <ResponsiveContainer>
+                    <BarChart
+                      data={this.state.data}
+                      margin={{ top: 20, right: 30, left: 0, bottom: 5 }}
+                    >
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="Technology" />
+                      <Tooltip />
+                      <Bar dataKey="Projects" fill={barColor} barSize={50} />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+              )}
             </Col>
 
-            {/* Right column: Text section */}
-            <Col lg={6} md={12} sm={12}>
-              <p className="text-start text-justify serviceDescription">
-                Hi! I'm Kazi Ariyan. I'm a web developer with a serious love for teaching.
-                I am a founder of eLe Easy Learning and a passionate Web Developer, Programmer & Instructor.
-                <br /><br />
-                I have been working online for the last 7 years and have created several successful websites.
-                I create project-based courses that help you learn professionally and feel like a complete developer.
-                Easy Learning exists to help you succeed in life.
-                <br /><br />
-                Each course is hand-tailored to teach a specific skill. Whether you’re learning a new skill
-                or refreshing your memory, you're in the right place.
+            {/* Description section */}
+            <Col lg={6} md={12}>
+              <p className="text-start">
+                Hi! I'm <strong>Kazi Ariyan</strong>, a web developer and founder of <strong>eLe Easy Learning</strong>.
+                I've been working online for 7+ years, creating successful websites and sharing my knowledge through project-based courses.
+              </p>
+              <p className="text-start">
+                My mission is to help you learn skills that matter. Whether you're starting from scratch or want to refresh your memory,
+                you're in the right place!
               </p>
             </Col>
           </Row>
@@ -76,5 +84,4 @@ class Analysis extends Component {
   }
 }
 
-// Export the component to be used in other files
 export default Analysis;

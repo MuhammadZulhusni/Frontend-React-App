@@ -1,92 +1,82 @@
-import React, { Component, Fragment } from 'react';
-import { Card, Col, Container, Row, Button } from 'react-bootstrap';
-
+// Import React and needed components
+import React, { Component, Fragment } from 'react'
+import { Card, Col, Container, Row, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
+// Import API helper files
+import RestClient from '../../RestAPI/RestClient';
+import AppUrl from '../../RestAPI/AppUrl';
+
+// Create a class component called RecentProject
 class RecentProject extends Component {
+
+  // Set initial state
+  constructor(){
+    super();
+    this.state = {
+      myData: [] // This will hold the project data from the API
+    }
+  }
+
+  // This function runs after the component is added to the page
+  componentDidMount(){
+    // Get data from the API and update the state
+    RestClient.GetRequest(AppUrl.ProjectHome).then(result => {
+      this.setState({ myData: result });
+    });
+  }
+
+  // This function decides what to display on the page
   render() {
+    // Store the API data
+    const MyList = this.state.myData;
+
+    // Loop through the data and generate UI elements
+    const MyView = MyList.map(MyList => {
+      return (
+        <Col lg={4} md={6} sm={12}>
+          {/* Bootstrap card to show each project */}
+          <Card className="projectCard">
+            {/* Image from API */}
+            <Card.Img variant="top" src={MyList.img_one} />
+            
+            <Card.Body>
+              {/* Project title */}
+              <Card.Title className="serviceName">{MyList.project_name}</Card.Title>
+              
+              {/* Project description */}
+              <Card.Text className="serviceDescription">
+                {MyList.project_description}
+              </Card.Text>
+              
+              {/* View More button that links to the project details page */}
+              <Button variant="primary">
+                <Link className="link-style" to="/projectdetails">View More</Link>
+              </Button>
+            </Card.Body>
+          </Card>
+        </Col>
+      )
+    });
+
+    // Return the full layout
     return (
       <Fragment>
-        {/* Main container with centered text */}
+        {/* Main container for the recent projects section */}
         <Container className="text-center">
-          
           {/* Section title */}
           <h1 className="serviceMainTitle">RECENT PROJECTS</h1>
-
-          {/* Bottom divider line (styling element) */}
           <div className="bottom"></div>
 
-          {/* Project cards row - centered horizontally */}
-          <Row className="justify-content-center">
-
-            {/* === Project Card 1 === */}
-            <Col lg={4} md={6} sm={12}>
-              <Card className="projectCard mx-auto">
-                
-                {/* Project image */}
-                <Card.Img
-                  variant="top"
-                  src="https://image.freepik.com/free-vector/online-courses-tutorials_52683-37860.jpg"
-                  alt="Project One"
-                />
-                
-                {/* Project details */}
-                <Card.Body>
-                  <Card.Title className="serviceName">Project Name One</Card.Title>
-                  <Card.Text className="serviceDescription">
-                    Some quick example text to build on the card title and make up the bulk of
-                    the card's content.
-                  </Card.Text>
-                  
-                  {/* Project link button */}
-                  <Button variant="primary"><Link className="link-style" to="/projectdetails"> View More </Link>  </Button>
-                </Card.Body>
-              </Card>
-            </Col>
-
-            {/* === Project Card 2 === */}
-            <Col lg={4} md={6} sm={12}>
-              <Card className="projectCard mx-auto">
-                <Card.Img
-                  variant="top"
-                  src="https://image.freepik.com/free-vector/online-tutorials-concept_52683-37481.jpg"
-                  alt="Project Two"
-                />
-                <Card.Body>
-                  <Card.Title className="serviceName">Project Name Two</Card.Title>
-                  <Card.Text className="serviceDescription">
-                    Some quick example text to build on the card title and make up the bulk of
-                    the card's content.
-                  </Card.Text>
-                  <Button variant="primary"><Link className="link-style" to="/projectdetails"> View More </Link>  </Button>
-                </Card.Body>
-              </Card>
-            </Col>
-
-            {/* === Project Card 3 === */}
-            <Col lg={4} md={6} sm={12}>
-              <Card className="projectCard mx-auto">
-                <Card.Img
-                  variant="top"
-                  src="https://image.freepik.com/free-vector/online-courses-concept_23-2148533386.jpg"
-                  alt="Project Three"
-                />
-                <Card.Body>
-                  <Card.Title className="serviceName">Project Name Three</Card.Title>
-                  <Card.Text className="serviceDescription">
-                    Some quick example text to build on the card title and make up the bulk of
-                    the card's content.
-                  </Card.Text>
-                  <Button variant="primary"><Link className="link-style" to="/projectdetails"> View More </Link>  </Button>
-                </Card.Body>
-              </Card>
-            </Col>
-
+          {/* Display each project in a responsive row */}
+          <Row>
+            {MyView}
           </Row>
         </Container>
       </Fragment>
-    );
+    )
   }
 }
 
-export default RecentProject;
+// Export the component so it can be used in other files
+export default RecentProject

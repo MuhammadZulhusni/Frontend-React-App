@@ -1,62 +1,73 @@
-// Import React and tools to build the component
+// Import required tools from React
 import React, { Component, Fragment } from 'react'
 
 // Import layout components from react-bootstrap
 import { Col, Container, Row } from 'react-bootstrap'
 
-// Import service icons (images)
+// Import some local image assets (not used in the dynamic part)
 import designIcon from '../../asset/image/design.png';
 import ecommerceIcon from '../../asset/image/ecommerce.png';
 import webIcon from '../../asset/image/web.png';
 
-// Create a class component called Services
+// Import API helper files
+import RestClient from '../../RestAPI/RestClient';
+import AppUrl from '../../RestAPI/AppUrl';
+
+// Create a class component named Services
 class Services extends Component {
+
+     // Initialize state with an empty array to store service data
+     constructor(){
+          super();
+          this.state={
+               myData:[]  // Will hold data from API
+          }
+     }
+
+     // This function runs after the component is mounted
+     componentDidMount(){
+          // Fetch data from the API and update the state
+          RestClient.GetRequest(AppUrl.Services).then(result=>{
+               this.setState({myData:result});
+          }) 
+     }
+
+     // Render the component UI
      render() {
+
+          // Store the service data in a variable
+          const MyList = this.state.myData;
+
+          // Map over the service data and create UI for each service
+          const MyView = MyList.map(MyList=>{
+               return (
+                    <Col lg={4} md={6} sm={12}>
+                         <div className="serviceCard text-center">
+                              {/* Load logo from API */}
+                              <img className="ecommerceIcon" src={MyList.service_logo} /> 
+                              
+                              {/* Show service name */}
+                              <h2 className="serviceName">{MyList.service_name}</h2>
+                              
+                              {/* Show service description */}
+                              <p className="serviceDescription">{MyList.service_description}</p>
+                         </div>
+                    </Col>  
+               )
+          });
+
+          // Return the full UI
           return (
                <Fragment>
-                    {/* Main container with center alignment */}
+                    {/* Main container for services */}
                     <Container className="text-center">
-
                          {/* Section title */}
                          <h1 className="serviceMainTitle">MY SERVICES</h1>
                          <div className="bottom"></div>
 
-                         {/* Bootstrap row to layout 3 columns */}
+                         {/* Display all services in a row */}
                          <Row>  
-
-                              {/* First service - Ecommerce */}
-                              <Col lg={4} md={6} sm={12}>
-                                   <div className="serviceCard text-center">
-                                        <img className="ecommerceIcon" src={ecommerceIcon} alt="Ecommerce Icon" /> 
-                                        <h2 className="serviceName">Ecommerce</h2>
-                                        <p className="serviceDescription">
-                                             I will design and develop ecommerce online store website.
-                                        </p>
-                                   </div>
-                              </Col> 
-
-                              {/* Second service - Web Design */}
-                              <Col lg={4} md={6} sm={12}>
-                                   <div className="serviceCard text-center">
-                                        <img className="designIcon" src={designIcon} alt="Design Icon" />
-                                        <h2 className="serviceName">Web Design</h2>
-                                        <p className="serviceDescription">
-                                             Qualified web design and attractive effects which catches visitor’s Eye.
-                                        </p> 
-                                   </div>
-                              </Col>
-
-                              {/* Third service - Web Development */}
-                              <Col lg={4} md={6} sm={12}>
-                                   <div className="serviceCard text-center">
-                                        <img className="webIcon" src={webIcon} alt="Web Development Icon" /> 
-                                        <h2 className="serviceName">Web Development</h2>
-                                        <p className="serviceDescription">
-                                             Clean and fresh issue free code to make your website dynamic perfectly.
-                                        </p>
-                                   </div>
-                              </Col>
-
+                              {MyView}
                          </Row>
                     </Container>
                </Fragment>
@@ -64,5 +75,5 @@ class Services extends Component {
      }
 }
 
-// Export this component so it can be used in other files
+// Export the component so it can be used elsewhere
 export default Services

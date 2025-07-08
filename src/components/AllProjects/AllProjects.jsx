@@ -1,119 +1,70 @@
-// Import React and necessary components
-import React, { Component, Fragment } from 'react'
-import { Card, Col, Container, Row, Button } from 'react-bootstrap'
+import React, { Component, Fragment } from 'react';
+import { Card, Col, Container, Row, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import RestClient from '../../RestAPI/RestClient';
+import AppUrl from '../../RestAPI/AppUrl';
 
-import { Link } from 'react-router-dom'
-
-// AllProjects component to display a list of recent project cards
 class AllProjects extends Component {
-     render() {
-          return (
-               // Fragment allows grouping without adding extra DOM element
-               <Fragment>
-                    {/* Container for the entire section */}
-                    <Container className="text-center">
-                         {/* Section title */}
-                         <h1 className="serviceMainTitle">RECENT PROJECTS</h1>
-                         <div className="bottom"></div>
+  constructor() {
+    super();
+    // State to store project data
+    this.state = {
+      myData: []
+    };
+  }
 
-                         {/* Row to hold all project cards */}
-                         <Row>
+  componentDidMount() {
+    // Call API to fetch all project data
+    RestClient.GetRequest(AppUrl.ProjectAll).then(result => {
+      // If data is returned, store in state
+      if (result) {
+        this.setState({ myData: result });
+      }
+    });
+  }
 
-                              {/* First Project Card */}
-                              <Col lg={4} md={6} sm={12}>
-                                   <Card className="projectCard">
-                                        <Card.Img variant="top" src="https://image.freepik.com/free-vector/online-courses-tutorials_52683-37860.jpg" />
-                                        <Card.Body>
-                                             <Card.Title className="serviceName">Project Name One</Card.Title>
-                                             <Card.Text className="serviceDescription">
-                                                  Some quick example text to build on the card title and make up the bulk of
-                                                  the card's content.
-                                             </Card.Text>
-                                             <Button variant="primary"><Link className="link-style"  to="/projectdetails"> View More </Link>  </Button>
-                                        </Card.Body>
-                                   </Card>
-                              </Col>
+  render() {
+    // Get data from state
+    const MyList = this.state.myData;
 
-                              {/* Second Project Card */}
-                              <Col lg={4} md={6} sm={12}>
-                                   <Card className="projectCard">
-                                        <Card.Img variant="top" src="https://image.freepik.com/free-vector/online-tutorials-concept_52683-37481.jpg" />
-                                        <Card.Body>
-                                             <Card.Title className="serviceName">Project Name Two</Card.Title>
-                                             <Card.Text className="serviceDescription">
-                                                  Some quick example text to build on the card title and make up the bulk of
-                                                  the card's content.
-                                             </Card.Text>
-                                             <Button variant="primary"><Link className="link-style"  to="/projectdetails"> View More </Link>  </Button>
-                                        </Card.Body>
-                                   </Card>
-                              </Col>
+    // Loop through the project list and create card for each
+    const MyView = MyList.map((item, index) => {
+      return (
+        <Col lg={4} md={6} sm={12} key={index}>
+          {/* Project card */}
+          <Card className="projectCard">
+            <Card.Img variant="top" src={item.img_one} />
+            <Card.Body>
+              <Card.Title className="serviceName">{item.project_name}</Card.Title>
+              <Card.Text className="serviceDescription">
+                {item.project_description}
+              </Card.Text>
+              {/* Button to view more (navigate to project details page) */}
+              <Button variant="primary">
+                <Link className="link-style" to="/projectdetails">
+                  View More
+                </Link>
+              </Button>
+            </Card.Body>
+          </Card>
+        </Col>
+      );
+    });
 
-                              {/* Third Project Card */}
-                              <Col lg={4} md={6} sm={12}>
-                                   <Card className="projectCard">
-                                        <Card.Img variant="top" src="https://image.freepik.com/free-vector/online-courses-concept_23-2148533386.jpg" />
-                                        <Card.Body>
-                                             <Card.Title className="serviceName">Project Name Three</Card.Title>
-                                             <Card.Text className="serviceDescription">
-                                                  Some quick example text to build on the card title and make up the bulk of
-                                                  the card's content.
-                                             </Card.Text>
-                                             <Button variant="primary"><Link className="link-style"  to="/projectdetails"> View More </Link>  </Button>
-                                        </Card.Body>
-                                   </Card>
-                              </Col>
-
-                              {/* Repeated Cards Below */}
-
-                              <Col lg={4} md={6} sm={12}>
-                                   <Card className="projectCard">
-                                        <Card.Img variant="top" src="https://image.freepik.com/free-vector/online-courses-tutorials_52683-37860.jpg" />
-                                        <Card.Body>
-                                             <Card.Title className="serviceName">Project Name One</Card.Title>
-                                             <Card.Text className="serviceDescription">
-                                                  Some quick example text to build on the card title and make up the bulk of
-                                                  the card's content.
-                                             </Card.Text>
-                                             <Button variant="primary"><Link className="link-style"  to="/projectdetails"> View More </Link>  </Button>
-                                        </Card.Body>
-                                   </Card>
-                              </Col>
-
-                              <Col lg={4} md={6} sm={12}>
-                                   <Card className="projectCard">
-                                        <Card.Img variant="top" src="https://image.freepik.com/free-vector/online-courses-tutorials_52683-37860.jpg" />
-                                        <Card.Body>
-                                             <Card.Title className="serviceName">Project Name One</Card.Title>
-                                             <Card.Text className="serviceDescription">
-                                                  Some quick example text to build on the card title and make up the bulk of
-                                                  the card's content.
-                                             </Card.Text>
-                                             <Button variant="primary"><Link className="link-style"  to="/projectdetails"> View More </Link>  </Button>
-                                        </Card.Body>
-                                   </Card>
-                              </Col>
-
-                              <Col lg={4} md={6} sm={12}>
-                                   <Card className="projectCard">
-                                        <Card.Img variant="top" src="https://image.freepik.com/free-vector/online-courses-tutorials_52683-37860.jpg" />
-                                        <Card.Body>
-                                             <Card.Title className="serviceName">Project Name One</Card.Title>
-                                             <Card.Text className="serviceDescription">
-                                                  Some quick example text to build on the card title and make up the bulk of
-                                                  the card's content.
-                                             </Card.Text>
-                                             <Button variant="primary"><Link className="link-style"  to="/projectdetails"> View More </Link>  </Button>
-                                        </Card.Body>
-                                   </Card>
-                              </Col>
-
-                         </Row>
-                    </Container>
-               </Fragment>
-          )
-     }
+    return (
+      <Fragment>
+        <Container className="text-center">
+          {/* Section heading */}
+          <h1 className="serviceMainTitle">RECENT PROJECTS</h1>
+          <div className="bottom"></div>
+          {/* Display all project cards */}
+          <Row>
+            {MyView}
+          </Row>
+        </Container>
+      </Fragment>
+    );
+  }
 }
 
-// Export the component so it can be used elsewhere
-export default AllProjects
+export default AllProjects;

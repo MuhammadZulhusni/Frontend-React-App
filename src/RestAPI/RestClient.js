@@ -1,22 +1,35 @@
 // Import axios for making HTTP requests
 import axios from 'axios';
 
-// This class provides a reusable method for making GET requests using axios
+// This class provides reusable HTTP methods for API calls
 class RestClient {
 
-    // Static method to send a GET request to the given URL
+    // Method to send a GET request
     static GetRequest = (getUrl) => {
         return axios.get(getUrl)
             .then(response => {
-                // If the request is successful, return the response data
+                // Return response data if successful
                 return response.data;
             })
             .catch(error => {
-                // If there's an error, return null
+                // Return null if an error occurs
                 return null;
             });
     }
+
+    // Method to send a POST request
+    static PostRequest = (postUrl, postJson) => {
+        let config = {
+            headers: {
+                'Content-Type': 'application/json', // JSON format header
+            }
+        };
+
+        return axios.post(postUrl, postJson, config)
+            .then(response => response.data)
+            .catch(error => null);
+    }
 }
 
-// Export the class so it can be imported and used in other files
+// Export the class so it can be reused across the app
 export default RestClient;

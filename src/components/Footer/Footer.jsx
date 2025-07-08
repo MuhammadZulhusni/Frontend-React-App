@@ -1,84 +1,103 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { Component, Fragment } from 'react'
-import { Col, Row, Container } from 'react-bootstrap'
-
-// Importing brand icons from Font Awesome
-import { faFacebook } from '@fortawesome/free-brands-svg-icons'
-import { faYoutube } from '@fortawesome/free-brands-svg-icons'
-import { faTwitter } from '@fortawesome/free-brands-svg-icons'
-
-// Importing solid icons from Font Awesome
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
-import { faPhone } from '@fortawesome/free-solid-svg-icons'
-
-import {BrowserRouter as Router,Switch, Route, Link} from "react-router-dom";
+// Import required modules and icons
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { Component, Fragment } from 'react';
+import { Col, Row, Container } from 'react-bootstrap';
+import { faFacebook, faYoutube, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import { faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons';
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import RestClient from '../../RestAPI/RestClient';
+import AppUrl from '../../RestAPI/AppUrl';
 
 class Footer extends Component {
-  render() {
-    return (
-      <Fragment>
-        {/* Footer Section */}
-        <Container fluid={true} className="footerSection">
-          <Row>
-            {/* Social Media Links */}
-            <Col lg="3" md={6} sm={12} className="p-5 text-center">
-              <h2 className="footerName text-center">Follow Us</h2>
+     constructor() {
+          super();
+          // Initialize state with placeholder values
+          this.state = { 
+               address: "...",
+               email: "...",
+               phone: "...",
+               facebook: "...",
+               youtube: "...",
+               twitter: "...",
+               footer_credit: "..."
+          };
+     }
 
-              <div className="social-container">
-                {/* Facebook Icon */}
-                <a className="facebook social" href="#">
-                  <FontAwesomeIcon icon={faFacebook} size="2x" />
-                </a>
+     // Fetch footer data from the API after the component mounts
+     componentDidMount() {          
+          RestClient.GetRequest(AppUrl.FooterData).then(result => {
+               // Update state with the API response
+               this.setState({
+                    address: result[0]['address'],
+                    email: result[0]['email'],
+                    phone: result[0]['phone'],
+                    facebook: result[0]['facebook'],
+                    youtube: result[0]['youtube'],
+                    twitter: result[0]['twitter'],
+                    footer_credit: result[0]['footer_credit'] 
+               });
+          });
+     }
 
-                {/* YouTube Icon */}
-                <a href="#" className="youtube social">
-                  <FontAwesomeIcon icon={faYoutube} size="2x" />
-                </a>
+     render() {
+          return (
+               <Fragment>
+                    {/* Main footer container */}
+                    <Container fluid={true} className="footerSection">
+                         <Row>
+                              {/* Social Media Links */}
+                              <Col lg="3" md={6} sm={12} className="p-5 text-center">
+                                   <h2 className="footerName text-center">Follow Us</h2>
+                                   <div className="social-container">
+                                        <a className="facebook social" href={this.state.facebook}>
+                                             <FontAwesomeIcon icon={faFacebook} size="2x" />  
+                                        </a>
+                                        <a href={this.state.youtube} className="youtube social">
+                                             <FontAwesomeIcon icon={faYoutube} size="2x" />  
+                                        </a>
+                                        <a href={this.state.twitter} className="twitter social">
+                                             <FontAwesomeIcon icon={faTwitter} size="2x" />  
+                                        </a> 
+                                   </div>
+                              </Col>
 
-                {/* Twitter Icon */}
-                <a href="#" className="twitter social">
-                  <FontAwesomeIcon icon={faTwitter} size="2x" />
-                </a>
-              </div>
-            </Col>
+                              {/* Address & Contact Info */}
+                              <Col lg="3" md={6} sm={12} className="p-5 text-justify">
+                                   <h2 className="footerName">Address</h2>
+                                   <p className="footerDescription">
+                                        {this.state.address} <br />
+                                        <FontAwesomeIcon icon={faEnvelope} /> Email: {this.state.email}<br />
+                                        <FontAwesomeIcon icon={faPhone} /> Phone: {this.state.phone}<br />
+                                   </p>
+                              </Col>
 
-            {/* Address Section */}
-            <Col lg="3" md={6} sm={12} className="p-5 text-justify">
-              <h2 className="footerName">Address</h2>
-              <p className="footerDescription">
-                6522 Baltimore National Pike CatonsVille, California, USA <br />
-                <FontAwesomeIcon icon={faEnvelope} /> Email: Support@ele.com<br />
-                <FontAwesomeIcon icon={faPhone} /> Phone: 434343434<br />
-              </p>
-            </Col>
+                              {/* Information Links */}
+                              <Col lg="3" md={6} sm={12} className="p-5 text-justify">
+                                   <h2 className="footerName">Information</h2>
+                                   <Link className="footerLink" to="/about">About Me</Link> <br />
+                                   <Link className="footerLink" to="/about">Company Profile</Link> <br />
+                                   <Link className="footerLink" to="/contact">Contact Us</Link> <br />
+                              </Col>
 
-            {/* Information Links */}
-            <Col lg="3" md={6} sm={12} className="p-5 text-justify">
-              <h2 className="footerName">Information</h2>
-              <a className="footerLink" href="#">About Me</a> <br />
-              <a className="footerLink" href="#">Company Profile</a> <br />
-              <a className="footerLink" href="#">Contact Us</a> <br />
-            </Col>
+                              {/* Policy Links */}
+                              <Col lg="3" md={6} sm={12} className="p-5 text-justify">
+                                   <h2 className="footerName">Policy</h2>
+                                   <Link className="footerLink" to="/refund">Refund Policy</Link> <br />
+                                   <Link className="footerLink" to="/trems">Trems And Condition</Link> <br />
+                                   <Link className="footerLink" to="/privacy">Privacy And Policy</Link> <br />
+                              </Col>
+                         </Row>
+                    </Container>
 
-            {/* Policy Links */}
-            <Col lg="3" md={6} sm={12} className="p-5 text-justify">
-              <h2 className="footerName">Policy</h2>
-              <Link className="footerLink" to="/refund">Refund Policy</Link> <br></br>
-              <Link className="footerLink" to="/trems">Terms And Condition</Link> <br></br>
-              <Link className="footerLink" to="/privacy">Privacy Policy</Link> <br></br>
-            </Col>
-          </Row>
-        </Container>
-
-        {/* Copyright Section */}
-        <Container fluid={true} className="text-center copyrightSection">
-          <a className="copyrightlink" href="#">
-            © Copyright 2016 by Easy Learning, All Rights Reserved
-          </a>
-        </Container>
-      </Fragment>
-    )
-  }
+                    {/* Copyright section */}
+                    <Container fluid={true} className="text-center copyrightSection">
+                         <a className="copyrightlink" href="#">
+                              {this.state.footer_credit}
+                         </a>
+                    </Container>
+               </Fragment>
+          );
+     }
 }
 
-export default Footer
+export default Footer;

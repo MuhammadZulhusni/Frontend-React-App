@@ -51,7 +51,7 @@ class RecentProject extends Component {
               
               {/* View More button that links to the project details page */}
               <Button variant="primary">
-                <Link className="link-style" to="/projectdetails">View More</Link>
+                <Link className="link-style" to={"/projectdetails/"+MyList.id}> View More </Link>  
               </Button>
             </Card.Body>
           </Card>

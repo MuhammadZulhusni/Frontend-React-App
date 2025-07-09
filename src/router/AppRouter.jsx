@@ -53,7 +53,7 @@ class AppRouter extends Component {
                          <Route path="/privacy" element={<PrivacyPage />} />
 
                          {/* Route for Project Details (Home) */}
-                         <Route path="/projectdetails" element={<ProjectDetailPage />} />
+                         <Route path="/projectdetails/:projectID/:projectName" element={<ProjectDetailPage />} />
 
                          {/* Route for Course Details (Home) */}
                          <Route path="/coursedetails" element={<CourseDetailsPage />} />     

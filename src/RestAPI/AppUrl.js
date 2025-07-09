@@ -16,7 +16,7 @@ class AppUrl {
     static HomeVideo = this.BaseURL + '/home/video';
 
     // Project-related endpoints
-    static ProjectDetails = this.BaseURL + '/projectdetails';
+    static ProjectDetails = this.BaseURL + '/projectdetails/';
     static ProjectAll = this.BaseURL + '/projectall';
     static ProjectHome = this.BaseURL + '/projecthome';
 

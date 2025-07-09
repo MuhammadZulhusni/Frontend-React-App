@@ -1,27 +1,36 @@
-import React, { Fragment, useEffect } from 'react'; // Import useEffect for window.scroll
+import React, { Fragment, useEffect, useState } from 'react';
 import Footer from '../components/Footer/Footer';
 import PageTop from '../components/PageTop/PageTop';
 import ProjectDetails from '../components/ProjectDetails/ProjectDetails';
 import TopNavigation from '../components/TopNavigation/TopNavigation';
-import { useParams } from 'react-router-dom'; // Import useParams hook directly here!
+import { useParams } from 'react-router-dom';
+import RestClient from '../RestAPI/RestClient';
+import AppUrl from '../RestAPI/AppUrl';
 
-// Convert ProjectDetailPage to a functional component
 const ProjectDetailPage = () => {
-    // Use the useParams hook to get the URL parameters
-    const { projectID } = useParams();
+    const { projectID } = useParams(); // Get ID from URL
+    const [projectName, setProjectName] = useState("Project Details"); // Default title
 
-    // Use useEffect for side effects, similar to componentDidMount
+    // Scroll to top and fetch project name
     useEffect(() => {
-        // This will run once when the component mounts
-        window.scroll(0, 0);
-        console.log("ProjectPassedID (from useParams):", projectID); // For debugging
-    }, [projectID]); // Add projectID to dependency array if you want to re-run when ID changes
+        window.scrollTo(0, 0);
+
+        // Fetch project name based on projectID
+        RestClient.PostRequest(AppUrl.ProjectDetails, { id: projectID })
+            .then(result => {
+                if (result && result[0]) {
+                    setProjectName(result[0].project_name); // Set project name to state
+                }
+            })
+            .catch(error => {
+                console.error("Failed to fetch project details", error);
+            });
+    }, [projectID]);
 
     return (
         <Fragment>
-            <TopNavigation title="Project Details " />
-            <PageTop pagetitle="Project Details" />
-            {/* Pass the ID down to the ProjectDetails component */}
+            <TopNavigation title="Project Details" />
+            <PageTop pagetitle={projectName} />
             <ProjectDetails id={projectID} />
             <Footer />
         </Fragment>

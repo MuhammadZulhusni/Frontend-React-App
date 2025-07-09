@@ -1,121 +1,102 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment } from 'react'
 // React Bootstrap components for layout and styling
-import { Col, Container, Row, Image } from 'react-bootstrap';
+import { Col, Container, Row, Button } from 'react-bootstrap' // Added 'Button' for the live preview link
+// Local placeholder image (used as a fallback or initial image)
+import projectDetails from '../../asset/image/pdetails.png';
 // FontAwesome for icons
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckSquare } from '@fortawesome/free-solid-svg-icons';
-
-// Local placeholder image for project details
-import projectDetailsPlaceholder from '../../asset/image/pdetails.png';
-
-// If fetching real data, also needs these imports:
-// import RestClient from '../../RestAPI/RestClient';
-// import AppUrl from '../../RestAPI/AppUrl';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheckSquare } from '@fortawesome/free-solid-svg-icons'
+// Custom API client and URL constants
+import RestClient from '../../RestAPI/RestClient';
+import AppUrl from '../../RestAPI/AppUrl';
+// Library to parse HTML strings into React components
+import parse from 'html-react-parser'; // Assuming 'html-react-parser' is the correct package now
 
 class ProjectDetails extends Component {
-     // Component setup
+     // Component constructor: initializes state and receives props
      constructor(props){
-          super(props); // Essential first line in constructor
-          this.state = {
-               MyProjectId: props.id, // Project ID received from parent component
-               // For real data fetching, state would also include:
-               // projectData: null, // Stores actual project details
-               // loading: true,     // Manages loading state
-               // error: false       // Handles error state
-          };
+          // Always call super(props) in a class component constructor if using props
+          super(props);
+          this.state={
+               MyProjectId: props.id, // Project ID passed from the parent component (from URL)
+               // Initial placeholder values for project details
+               img_two:"...",
+               projectname:"...",
+               project_description:"...",
+               project_features:"...",
+               live_preview:"..."
+               // Note: For robust apps, also include 'loading' and 'error' states here
+          }
      }
 
-     // Lifecycle method: runs after component appears on screen
-     componentDidMount() {
-        // Scrolls window to the top
-        window.scroll(0,0);
+     // Lifecycle method: runs after the component is first displayed
+     componentDidMount(){
+          // Scroll to the top of the page (good for detail views)
+          window.scroll(0,0);
+          
+          // Fetch project details from the API using the project ID
+          RestClient.GetRequest(AppUrl.ProjectDetails + this.state.MyProjectId)
+          .then(result => {
+              // Update component state with fetched data
+              // Assumes API returns an array, with the project object as the first item
+              this.setState({
+                img_two: result[0]['img_two'],
+                projectname: result[0]['project_name'],
+                project_description: result[0]['project_description'],
+                project_features: result[0]['project_features'],
+                live_preview: result[0]['live_preview'] 
+              });
+              // Note: Add error handling and check if result[0] exists before accessing properties
+         })
+         .catch(error => {
+             // Handle API call errors (e.g., network issues, server errors)
+             // Set an 'error' state here and display an error message in render()
+             console.error("Error fetching project details:", error);
+         });
+    }
 
-        // API call logic typically goes here for fetching project details.
-        // (Currently commented out as per previous instructions for styling focus).
-        /*
-        if (this.state.MyProjectId) {
-            // Example data fetching:
-            // RestClient.GetRequest(AppUrl.ProjectDetails + this.state.MyProjectId)
-            // .then(result => {
-            //     // Process and set fetched data in state
-            // });
-        }
-        */
-     }
-
-     // Describes component's appearance
+    // Render method: describes what the component displays
      render() {
-          // Variables for displaying data.
-          // For real data, these would come from `this.state.projectData`.
-          const currentProjectId = this.state.MyProjectId;
-          const imageUrl = projectDetailsPlaceholder;
-          const projectName = `Project ID: ${currentProjectId}`;
-          const projectDescription = `This is a detailed description for Project ID ${currentProjectId}. It highlights key aspects of the project.`;
-          const features = [
-            "Requirement Gathering",
-            "Modular Architecture",
-            "User-Friendly Interface",
-            "Database Integration",
-            "Quality Assurance",
-            "Ongoing Support"
-          ];
-
-          // Loading/error states would be rendered here if fetching real data.
-          /*
-          if (loading) { return <Container className="text-center my-5"><p>Loading...</p></Container>; }
-          if (error || !projectData) { return <Container className="text-center my-5"><p className="text-danger">Error loading project.</p></Container>; }
-          */
-
           return (
               <Fragment>
-                   {/* Main container with top/bottom margin */}
-                   <Container className="my-5">
-                        {/* Row for content, centered horizontally and vertically */}
-                        <Row className="justify-content-center align-items-center">
-                            {/* Column for project image */}
-                            <Col lg={6} md={6} sm={12} className="mb-4 mb-md-0">
-                                {/* Responsive and styled image using React Bootstrap's Image component */}
-                                <Image
-                                    src={imageUrl}
-                                    alt={projectName} // Accessibility text
-                                    fluid // Responsive sizing
-                                    rounded // Rounded corners
-                                    className="shadow-sm" // Subtle shadow effect
-                                />
+                   {/* Main container with top margin for spacing */}
+                   <Container className="mt-5">
+                        <Row>
+                            {/* Column for the project image */}
+                            <Col lg={6} md={6} sm={12}>
+                                <div className="about-thumb-wrap after-shape">
+                                    {/* Project image display */}
+                                    {/* Consider using <Image> from react-bootstrap for better styling: <Image src={this.state.img_two} fluid rounded className="shadow-sm" /> */}
+                                    <img src={this.state.img_two} alt={this.state.projectname} />
+                                </div>
                             </Col>
 
-                            {/* Column for project details text */}
-                            <Col lg={6} md={6} sm={12}>
+                            {/* Column for project text details */}
+                            <Col lg={6} md={6} sm={12} className="mt-5"> {/* Added top margin for consistency */}
                                 <div className="project-details">
-                                    {/* Project Title: Large, bold, primary color */}
-                                    {/* (Replace with actual project name if fetched) */}
-                                    <h1 className="display-5 fw-bold mb-3 text-primary">
-                                        {projectName}
-                                    </h1>
-                                    {/* Project Description: Lead text style, muted color */}
-                                    {/* (Replace with actual project description if fetched) */}
-                                    <p className="lead mb-4 text-secondary">
-                                        {projectDescription}
+                                    {/* Project Name Heading */}
+                                    <h1 className="projectDetailsText"> {this.state.projectname} </h1>
+                                    {/* Project Description, parsed as HTML */}
+                                    <p className="detailsName">
+                                    { parse(this.state.project_description) }
                                     </p>
 
-                                    {/* List of Features */}
-                                    <ul className="list-unstyled"> {/* Removes default bullet points */}
-                                        {features.map((feature, index) => (
-                                            <li key={index} className="mb-2"> {/* List item with vertical spacing */}
-                                                {/* Checkmark icon: green color, right margin */}
-                                                <FontAwesomeIcon className="text-success me-2" icon={faCheckSquare} />
-                                                {/* Feature text: muted color */}
-                                                <span className="text-muted">{feature}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
+                                    {/* Project Features, parsed as HTML */}
+                                    <p className="cardSubTitle text-justify">
+                                        <FontAwesomeIcon className="iconBullent" icon={faCheckSquare} />
+                                        { parse(this.state.project_features) }
+                                    </p>
+
+                                    {/* Live Preview Button */}
+                                    {/* Ensure live_preview is a valid URL before rendering, and add target="_blank" for new tab */}
+                                    <Button variant="info" href={this.state.live_preview}> Live Preview </Button>
                                 </div>
                             </Col>
                         </Row>
                    </Container>
               </Fragment>
-          );
+          )
      }
 }
 
-export default ProjectDetails;
+export default ProjectDetails

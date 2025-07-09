@@ -41,7 +41,7 @@ class AllProjects extends Component {
               </Card.Text>
               {/* Button to view more (navigate to project details page) */}
               <Button variant="primary">
-                <Link className="link-style" to={"/projectdetails/"+item.id}> View More </Link>  
+                <Link className="link-style" to={"/projectdetails/"+item.id+"/"+item.project_name}> View More </Link> 
               </Button>
             </Card.Body>
           </Card>

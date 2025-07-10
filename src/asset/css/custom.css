@@ -692,3 +692,8 @@ a.twitter{
   color: #e53935;
   font-weight: bold;
 }
+
+ .LoaderAnimation{
+      width: 140px;
+      height: 140px;
+ }

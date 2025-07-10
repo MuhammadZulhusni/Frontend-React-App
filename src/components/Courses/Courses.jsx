@@ -1,79 +1,78 @@
-// Import React and needed components
 import React, { Component, Fragment } from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import RestClient from '../../RestAPI/RestClient'; // Client for making API requests
+import AppUrl from '../../RestAPI/AppUrl';           // API endpoint definitions
 
-// Import API helper files
-import RestClient from '../../RestAPI/RestClient';
-import AppUrl from '../../RestAPI/AppUrl';
-
-// Create a class component called Courses
+// Courses component displays a list of courses fetched from an API.
 class Courses extends Component {
 
-     // Set initial state
      constructor(){
           super();
-          this.state = {
-               myData: [] // This will hold the course data from the API
+          // Initialize component's state to hold fetched course data.
+          this.state={
+               myData:[]
           }
      }
 
-     // This function runs after the component is added to the page
+     // Lifecycle method: Called immediately after a component is mounted.
+     // This is the ideal place to fetch data from an API.
      componentDidMount(){
-          // Get course data from the API and update the state
-          RestClient.GetRequest(AppUrl.CourseHome).then(result => {
-               this.setState({ myData: result });
-          }) 
+          // Make a GET request to the 'CourseHome' API endpoint.
+          RestClient.GetRequest(AppUrl.CourseHome).then(result=>{
+               // Update the component's state with the fetched data.
+               this.setState({myData:result});
+          })
      }
 
-     // This function decides what to display on the page
      render() {
-          // Store the course list from API
+          // Destructure 'myData' from the component's state for easier access.
           const MyList = this.state.myData;
 
-          // Map through the course list and create UI elements
-          const MyView = MyList.map(MyList => {
-            return (
-              <Col lg={6} md={12} sm={12}>
-                <Row>
-                  {/* Left side - image */}
-                  <Col lg={6} md={6} sm={12} className="p-2">
-                    <img className="courseImg" src={MyList.small_img} />
-                  </Col>
-
-                  {/* Right side - title, description, and link */}
-                  <Col lg={6} md={6} sm={12}>
-                    <h5 className="text-justify serviceName">{MyList.short_title}</h5>
-                    <p className="text-justify serviceDescription">{MyList.short_description}</p>
-                    <Link className="courseViewMore float-left" to="/coursedetails">
-                      View Details
-                    </Link>
-                  </Col>
-                </Row>
-              </Col>
-            )
+          // Map over the 'MyList' array to create a React component for each course item.
+          const MyView = MyList.map(courseItem => { // Renamed MyList parameter to courseItem for clarity
+               return (
+                    // Each column represents a single course item.
+                    // 'key' prop is crucial for React to efficiently update lists.
+                    <Col lg={6} md={12} sm={12} key={courseItem.id}> {/* Added unique key for list rendering */}
+                        <Row>
+                            {/* Column for the course image. */}
+                            <Col lg={6} md={6} sm={12} className="p-2" >
+                                {/* Displays the course image with an accessibility alt attribute. */}
+                                <img className="courseImg" src={courseItem.small_img} alt={courseItem.short_title} />
+                            </Col>
+                            {/* Column for course title, description, and details link. */}
+                            <Col lg={6} md={6} sm={12}>
+                                <h5 className="text-justify serviceName">{courseItem.short_title}</h5>
+                                <p className="text-justify serviceDescription">{courseItem.short_description}</p>
+                                {/* Link to the course details page.
+                                    The URL includes course ID and a URL-friendly version of the short title. */}
+                                <Link
+                                    className="courseViewMore float-left"
+                                    to={`/coursedetails/${courseItem.id}/${encodeURIComponent(courseItem.short_title.replace(/\s+/g, '-').toLowerCase())}`}
+                                >
+                                    View Details
+                                </Link>
+                            </Col>
+                        </Row>
+                    </Col>
+               )
           })
 
-          // Return the full layout
           return (
-            <Fragment>
-              {/* Main container for courses section */}
-              <Container className="text-center">
-                
-                {/* Section title */}
-                <h1 className="serviceMainTitle">MY COURSES</h1>
-                <div className="bottom"></div>
-
-                {/* Display course cards */}
-                <Row>
-                  {MyView}
-                </Row>
-
-              </Container>
-            </Fragment>
+              <Fragment>
+                   {/* Main container for the courses section. */}
+                   <Container className="text-center">
+                       <h1 className="serviceMainTitle">MY COURSES</h1>
+                       <div className="bottom"></div> {/* Decorative line */}
+                       {/* Renders the list of course items generated by the map function. */}
+                       <Row>
+                           {MyView}
+                       </Row>
+                   </Container>
+              </Fragment>
           )
      }
 }
 
-// Export the component so it can be used in other files
-export default Courses
+export default Courses; // Exports the Courses component for use in other parts of the application.

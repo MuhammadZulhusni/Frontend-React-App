@@ -1,40 +1,34 @@
-// This class stores and manages all API endpoint URLs used in the app.
-// It defines a base URL and appends specific paths to create full API endpoints.
-
 class AppUrl {
 
-    // Base URL for the Laravel backend API
-    // Local
-    // static BaseURL = 'http://127.0.0.1:8000/api';
-    // Production
+    // Base URL for the Laravel backend API, set for production environment
     static BaseURL = 'https://rapi.get-virtual-admin.com/api';
 
-    // Homepage-related endpoints
+    // API endpoints for Home Page sections
     static HomeTopTitle = this.BaseURL + '/homepage/title';
     static HomeTechDesc = this.BaseURL + '/techhome';
     static TotalHomeDetails = this.BaseURL + '/totalhome';
     static HomeVideo = this.BaseURL + '/home/video';
 
-    // Project-related endpoints
-    static ProjectDetails = this.BaseURL + '/projectdetails/';
+    // API endpoints for Projects
+    static ProjectDetails = this.BaseURL + '/projectdetails/'; // Note: This URL expects an ID appended for details
     static ProjectAll = this.BaseURL + '/projectall';
     static ProjectHome = this.BaseURL + '/projecthome';
 
-    // Services and information
+    // API endpoints for Services, Information, and Footer
     static Services = this.BaseURL + '/services';
     static Information = this.BaseURL + '/information';
     static FooterData = this.BaseURL + '/footerdata';
 
-    // Course-related endpoints
-    static CourseDetails = this.BaseURL + '/coursedetails';
+    // API endpoints for Courses
+    // This URL is for fetching a specific course's details, expecting an ID to be appended.
+    static CourseDetails = this.BaseURL + '/coursedetails/';
     static CourseAll = this.BaseURL + '/courseall';
     static CourseHome = this.BaseURL + '/coursehome';
 
-    // Other features
+    // API endpoints for Contact, Client Reviews, and Chart Data
     static ContactSend = this.BaseURL + '/contactsend';
     static ClientReview = this.BaseURL + '/clientreview';
     static ChartData = this.BaseURL + '/chartdata';
 }
 
-// Export the class so it can be used in other parts of the React app
 export default AppUrl;

@@ -1,21 +1,22 @@
-import React, { Component, Fragment } from 'react'
-import { Col, Container, Row } from 'react-bootstrap'
-import LoaderIcon from '../../asset/image/loader.svg';
+import React, { Component } from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
+import LoaderIcon from '../../asset/image/loader.svg'; 
+
 class Loading extends Component {
      render() {
           return (
-               <Fragment>
-                    <Container className="text-center">
-                         <Row>
-                              <Col>
-                  <img className="LoaderAnimation" src={LoaderIcon} />    
+               // Uses a div instead of Fragment when a single root element is desired
+               <div className="loading-container text-center py-5">
+                    <Container>
+                         <Row className="justify-content-center"> {/* Center content */}
+                              <Col xs={12}> {/* Use xs={12} to ensure it takes full width on small screens */}
+                                  <img className="LoaderAnimation" src={LoaderIcon} alt="Loading animation" />
                               </Col>
                          </Row>
                     </Container>
-
-               </Fragment>
-          )
+               </div>
+          );
      }
 }
 
-export default Loading
+export default Loading;

@@ -1,57 +1,80 @@
-import React, { Component, Fragment } from 'react'
-import { Container, Row, Col } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
-import RestClient from '../../RestAPI/RestClient'; // Client for making API requests
-import AppUrl from '../../RestAPI/AppUrl';           // API endpoint definitions
+import React, { Component, Fragment } from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import RestClient from '../../RestAPI/RestClient'; // API client
+import AppUrl from '../../RestAPI/AppUrl';           // API endpoints
+import Loading from '../Loading/Loading';           // Loading animation component
 
-// AllCourses component displays a comprehensive list of all available courses.
-// It fetches course data from an API and renders each course as a clickable item.
+/**
+ * AllCourses component: Fetches and displays a list of all courses.
+ * Includes loading and basic error handling states.
+ */
 class AllCourses extends Component {
      constructor(){
           super();
-          // Initialize component state to store the fetched course data.
-          this.state={
-               myData:[]
-          }
+          // Initialize component state for data, loading status, and error status.
+          this.state = {
+               myData: [],    // Stores fetched course data
+               loading: true, // True while data is being fetched
+               error: false   // True if an error occurs during fetch
+          };
      }
 
-     // Lifecycle method: Called immediately after the component is mounted to the DOM.
-     // This is the standard place to perform data fetching.
+     /**
+      * Fetches course data from the API immediately after component mounts.
+      */
      componentDidMount(){
-          // Make a GET request to the 'CourseAll' API endpoint to retrieve all courses.
-          RestClient.GetRequest(AppUrl.CourseAll).then(result=>{
-               // Update the component's state with the data received from the API.
-               this.setState({myData:result});
-          })
+          RestClient.GetRequest(AppUrl.CourseAll)
+              .then(result => {
+                  // Update state with fetched data, set loading to false, clear error.
+                  this.setState({
+                       myData: result,
+                       loading: false,
+                       error: false
+                  });
+              })
+              .catch(error => {
+                  // Log error, set loading to false, and set error state to true.
+                  console.error("Error fetching courses:", error);
+                  this.setState({
+                      loading: false,
+                      error: true
+                  });
+              });
      }
 
      render() {
-          // Destructure 'myData' from the component's state for easier access in rendering.
-          const MyList = this.state.myData;
+          // Display loading animation while data is being fetched.
+          if(this.state.loading === true){
+              return <Loading />;
+          }
 
-          // Map over the 'MyList' array to transform each course data object into a React component.
-          // This creates a list of course views for rendering.
-          const MyView = MyList.map(courseItem => { // Renamed MyList parameter to courseItem for clarity.
+          // Display error message if data fetching failed.
+          if(this.state.error === true){
+              return (
+                  <Container className="text-center my-5">
+                      <p className="text-danger lead">Failed to load courses. Please check your internet connection or try again later.</p>
+                  </Container>
+              );
+          }
+
+          // If data is loaded successfully, prepare course items for rendering.
+          const courseList = this.state.myData;
+
+          const courseViews = courseList.map(courseItem => {
              return  (
-                 // Each course is rendered within a Bootstrap Col component, providing responsive layout.
-                 // The 'key' prop is essential for React to efficiently identify and re-render list items.
-                 <Col lg={6} md={12} sm={12} key={courseItem.id}> {/* Unique key for list item rendering */}
+                 // Each course item is rendered in a responsive column.
+                 <Col lg={6} md={12} sm={12} key={courseItem.id}>
                      <Row>
-                         {/* Column dedicated to displaying the course image. */}
                          <Col lg={6} md={6} sm={12} className="p-2" >
-                             {/* Displays the course's small image. 'alt' attribute is crucial for accessibility. */}
+                             {/* Course image with alt text for accessibility. */}
                              <img className="courseImg" src={courseItem.small_img} alt={courseItem.short_title} />
                          </Col>
-                         {/* Column for course details: title, description, and a link to its full page. */}
                          <Col lg={6} md={6} sm={12}>
-                             {/* Displays the course's short title. */}
+                             {/* Course title and brief description. */}
                              <h5 className="text-justify serviceName">{courseItem.short_title}</h5>
-                             {/* Displays a brief description of the course. */}
                              <p className="text-justify serviceDescription">{courseItem.short_description}</p>
-                             {/* Link to the detailed course page.
-                                 The 'to' prop constructs the URL with the course ID and a URL-friendly version of the title.
-                                 'encodeURIComponent' ensures special characters in the title are properly handled in the URL.
-                                 'replace(/\s+/g, '-').toLowerCase()' converts spaces to hyphens and makes the title lowercase for a cleaner URL. */}
+                             {/* Link to the detailed course page, with a URL-friendly title. */}
                              <Link
                                  className="courseViewMore float-left"
                                  to={`/coursedetails/${courseItem.id}/${encodeURIComponent(courseItem.short_title.replace(/\s+/g, '-').toLowerCase())}`}
@@ -61,23 +84,22 @@ class AllCourses extends Component {
                          </Col>
                      </Row>
                  </Col>
-             )
-          })
+             );
+          });
 
           return (
                <Fragment>
-                   {/* Main container for the "MY COURSES" section, centered. */}
                    <Container className="text-center">
                        <h1 className="serviceMainTitle">MY COURSES</h1>
-                       <div className="bottom"></div> {/* A simple div for decorative underline/separator. */}
-                       {/* Renders the dynamic list of course views generated above. */}
+                       <div className="bottom"></div> {/* Decorative separator */}
                        <Row>
-                           {MyView}
+                           {/* Render the list of course items. */}
+                           {courseViews}
                        </Row>
                    </Container>
                </Fragment>
-          )
+          );
      }
 }
 
-export default AllCourses; // Exports the AllCourses component for use throughout the application.
+export default AllCourses;

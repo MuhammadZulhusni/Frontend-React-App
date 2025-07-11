@@ -1,81 +1,62 @@
-// Import React and needed components
-import React, { Component, Fragment } from 'react'
-import { Card, Col, Container, Row, Button } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
-
-// Import API helper files
+import React, { Component, Fragment } from 'react';
+import { Card, Col, Container, Row, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import RestClient from '../../RestAPI/RestClient';
 import AppUrl from '../../RestAPI/AppUrl';
-
 import Loading from '../Loading/Loading';
+import { Fade } from 'react-awesome-reveal'; 
 
-// Create a class component called RecentProject
 class RecentProject extends Component {
-
-  // Set initial state
   constructor(){
     super();
     this.state = {
-      myData: [], // This will hold the project data from the API
-      loading:true 
+      myData: [],
+      loading: true
     }
   }
 
-  // This function runs after the component is added to the page
   componentDidMount(){
-    // Get data from the API and update the state
     RestClient.GetRequest(AppUrl.ProjectHome).then(result => {
-      this.setState({myData:result,loading:false});
+      this.setState({ myData: result, loading: false });
     });
   }
 
-  // This function decides what to display on the page
   render() {
-      if(this.state.loading == true){
-            return <Loading />
-      }
-      else{ 
-    // Store the API data
-    const MyList = this.state.myData;
+    if (this.state.loading === true) {
+      return <Loading />
+    } else { 
+      const MyList = this.state.myData;
 
-      // Loop through the data and generate UI elements
-      const MyView = MyList.map(MyList => {
+      const MyView = MyList.map((MyList, index) => {
         return (
-          <Col lg={4} md={6} sm={12}>
-            {/* Bootstrap card to show each project */}
-            <Card className="projectCard">
-              {/* Image from API */}
-              <Card.Img variant="top" src={MyList.img_one} />
-              
-              <Card.Body>
-                {/* Project title */}
-                <Card.Title className="serviceName">{MyList.project_name}</Card.Title>
-                
-                {/* Project description */}
-                <Card.Text className="serviceDescription">
-                  {MyList.project_description}
-                </Card.Text>
-                
-                {/* View More button that links to the project details page */}
-                <Button variant="primary">
-                  <Link className="link-style" to={"/projectdetails/"+MyList.id+"/"+MyList.project_name}> View More </Link>  
-                </Button>
-              </Card.Body>
-            </Card>
+          <Col lg={4} md={6} sm={12} key={index}>
+            <Fade direction="up" triggerOnce>
+              <Card className="projectCard">
+                <Card.Img variant="top" src={MyList.img_one} />
+                <Card.Body>
+                  <Card.Title className="serviceName">{MyList.project_name}</Card.Title>
+                  <Card.Text className="serviceDescription">
+                    {MyList.project_description}
+                  </Card.Text>
+                  <Button variant="primary">
+                    <Link className="link-style" to={"/projectdetails/" + MyList.id + "/" + MyList.project_name}>
+                      View More
+                    </Link>
+                  </Button>
+                </Card.Body>
+              </Card>
+            </Fade>
           </Col>
-        )
+        );
       });
 
-      // Return the full layout
       return (
         <Fragment>
-          {/* Main container for the recent projects section */}
           <Container className="text-center">
-            {/* Section title */}
-            <h1 className="serviceMainTitle">RECENT PROJECTS</h1>
-            <div className="bottom"></div>
-
-            {/* Display each project in a responsive row */}
+            <Fade triggerOnce>
+              <h1 className="serviceMainTitle">RECENT PROJECTS</h1>
+              <div className="bottom"></div>
+            </Fade>
             <Row>
               {MyView}
             </Row>
@@ -86,5 +67,4 @@ class RecentProject extends Component {
   }
 }
 
-// Export the component so it can be used in other files
-export default RecentProject
+export default RecentProject;

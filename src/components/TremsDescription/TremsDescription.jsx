@@ -3,47 +3,61 @@ import React, { Component, Fragment } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import RestClient from '../../RestAPI/RestClient';
 import AppUrl from '../../RestAPI/AppUrl';
-import parse from 'html-react-parser'; // Import modern HTML parser
+import parse from 'html-react-parser';
 import Loading from '../Loading/Loading';
+import WentWrong from '../WentWrong/WentWrong';
+import { Fade } from 'react-awesome-reveal'; 
 
 class TermsDescription extends Component {
      constructor() {
           super();
-          // Initialize the state with default placeholder text
-          this.state = { 
+          this.state = {
                termsdesc: "...",
-               tremsdesc:"...",
-               loading:true
+               loading: true,
+               error: false
           };
      }
 
-     // Fetch data from API after the component mounts
-     componentDidMount() {          
-          RestClient.GetRequest(AppUrl.Information).then(result => {
-               // Set the state with the 'trems' field from the API
-               this.setState({tremsdesc:result[0]['trems'],loading:false});
-          }); 
+     componentDidMount() {
+          RestClient.GetRequest(AppUrl.Information)
+               .then(result => {
+                    if (result && result[0] && result[0]['trems']) {
+                         this.setState({
+                              termsdesc: result[0]['trems'],
+                              loading: false,
+                              error: false
+                         });
+                    } else {
+                         this.setState({ error: true, loading: false });
+                         console.error("API returned null or missing 'trems' data for terms description.");
+                    }
+               })
+               .catch(error => {
+                    console.error("Error fetching terms description:", error);
+                    this.setState({ error: true, loading: false });
+               });
      }
 
-     // Render the UI
      render() {
-               if(this.state.loading == true){
-                    return <Loading />
-                    }
-               else{ 
-
+          if (this.state.loading === true) {
+               return <Loading />;
+          } else if (this.state.error === true) {
+               return <WentWrong />;
+          } else {
                return (
                     <Fragment>
                          <Container className="mt-5">
                               <Row>
                                    <Col lg={12} md={12} sm={12}>
-                                        {/* Section title */}
-                                        <h1 className="serviceName">Terms and Conditions</h1>
-                                        <hr />
-                                        {/* Render HTML content using parser */}
-                                        <p className="serviceDescription">
-                                             { parse(this.state.termsdesc) }
-                                        </p>
+                                        <Fade triggerOnce direction="up">
+                                             <h1 className="serviceName">Terms and Conditions</h1>
+                                             <hr />
+                                        </Fade>
+                                        <Fade triggerOnce delay={100}>
+                                             <p className="serviceDescription">
+                                                  {parse(this.state.termsdesc)}
+                                             </p>
+                                        </Fade>
                                    </Col>
                               </Row>
                          </Container>
@@ -53,5 +67,4 @@ class TermsDescription extends Component {
      }
 }
 
-// Export the component so it can be used in other files
 export default TermsDescription;

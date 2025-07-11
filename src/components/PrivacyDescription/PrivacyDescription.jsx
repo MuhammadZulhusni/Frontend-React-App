@@ -9,45 +9,67 @@ import AppUrl from '../../RestAPI/AppUrl';
 // Import modern HTML parser to render HTML content as React elements
 import parse from 'html-react-parser';
 
+// Import custom loading and error components
 import Loading from '../Loading/Loading';
+import WentWrong from '../WentWrong/WentWrong'; 
 
+// Import animation
+import { Fade } from 'react-awesome-reveal';
+
+/**
+ * PrivacyDescription component: Fetches and displays the Privacy Policy
+ * content from an API. Includes loading and error states for a robust user experience.
+ */
 class PrivacyDescription extends Component {
      constructor() {
           super();
-          // Initialize state with default placeholder
-          this.state = { 
+          this.state = {
                privacydesc: "...",
-               loading:true
+               loading: true,
+               error: false
           };
      }
 
-     // When the component mounts, fetch data from the API
-     componentDidMount() {          
-          RestClient.GetRequest(AppUrl.Information).then(result => {
-               // Update state with 'privacy' content from API response
-               this.setState({privacydesc:result[0]['privacy'],loading:false});
-          }); 
+     componentDidMount() {
+          RestClient.GetRequest(AppUrl.Information)
+               .then(result => {
+                    if (result && result[0] && result[0]['privacy']) {
+                         this.setState({
+                              privacydesc: result[0]['privacy'],
+                              loading: false,
+                              error: false
+                         });
+                    } else {
+                         console.error("API returned null or missing 'privacy' data for Privacy Description.");
+                         this.setState({ error: true, loading: false });
+                    }
+               })
+               .catch(error => {
+                    console.error("Error fetching privacy description:", error);
+                    this.setState({ error: true, loading: false });
+               });
      }
 
-     // Render the component UI
      render() {
-               if(this.state.loading == true){
-                    return <Loading />
-               }
-               else{ 
-
+          if (this.state.loading === true) {
+               return <Loading />;
+          } else if (this.state.error === true) {
+               return <WentWrong />;
+          } else {
                return (
                     <Fragment>
                          <Container className="mt-5">
                               <Row>
                                    <Col lg={12} md={12} sm={12}>
-                                        {/* Title */}
-                                        <h1 className="serviceName">Privacy And Policy</h1>
-                                        <hr />
-                                        {/* Render HTML content from API */}
-                                        <p className="serviceDescription">
-                                             { parse(this.state.privacydesc) }
-                                        </p>
+                                        <Fade direction="up" triggerOnce>
+                                             <h1 className="serviceName">Privacy And Policy</h1>
+                                             <hr />
+                                        </Fade>
+                                        <Fade delay={100} triggerOnce>
+                                             <p className="serviceDescription">
+                                                  {parse(this.state.privacydesc)}
+                                             </p>
+                                        </Fade>
                                    </Col>
                               </Row>
                          </Container>
@@ -57,5 +79,4 @@ class PrivacyDescription extends Component {
      }
 }
 
-// Export the component so it can be used in other parts of the app
 export default PrivacyDescription;

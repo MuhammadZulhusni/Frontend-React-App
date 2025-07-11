@@ -9,12 +9,15 @@ import AppUrl from '../../RestAPI/AppUrl';
 // Import modern HTML parser to render HTML content as React elements
 import parse from 'html-react-parser';
 
+import Loading from '../Loading/Loading';
+
 class PrivacyDescription extends Component {
      constructor() {
           super();
           // Initialize state with default placeholder
           this.state = { 
-               privacydesc: "..."
+               privacydesc: "...",
+               loading:true
           };
      }
 
@@ -22,29 +25,35 @@ class PrivacyDescription extends Component {
      componentDidMount() {          
           RestClient.GetRequest(AppUrl.Information).then(result => {
                // Update state with 'privacy' content from API response
-               this.setState({ privacydesc: result[0]['privacy'] });
+               this.setState({privacydesc:result[0]['privacy'],loading:false});
           }); 
      }
 
      // Render the component UI
      render() {
-          return (
-               <Fragment>
-                    <Container className="mt-5">
-                         <Row>
-                              <Col lg={12} md={12} sm={12}>
-                                   {/* Title */}
-                                   <h1 className="serviceName">Privacy And Policy</h1>
-                                   <hr />
-                                   {/* Render HTML content from API */}
-                                   <p className="serviceDescription">
-                                        { parse(this.state.privacydesc) }
-                                   </p>
-                              </Col>
-                         </Row>
-                    </Container>
-               </Fragment>
-          );
+               if(this.state.loading == true){
+                    return <Loading />
+               }
+               else{ 
+
+               return (
+                    <Fragment>
+                         <Container className="mt-5">
+                              <Row>
+                                   <Col lg={12} md={12} sm={12}>
+                                        {/* Title */}
+                                        <h1 className="serviceName">Privacy And Policy</h1>
+                                        <hr />
+                                        {/* Render HTML content from API */}
+                                        <p className="serviceDescription">
+                                             { parse(this.state.privacydesc) }
+                                        </p>
+                                   </Col>
+                              </Row>
+                         </Container>
+                    </Fragment>
+               );
+          }
      }
 }
 

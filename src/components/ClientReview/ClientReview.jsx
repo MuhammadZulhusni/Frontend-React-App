@@ -13,6 +13,8 @@ import Slider from "react-slick"
 import RestClient from '../../RestAPI/RestClient';
 import AppUrl from '../../RestAPI/AppUrl';
 
+import Loading from '../Loading/Loading';
+
 // Create a class component called ClientReview
 class ClientReview extends Component {
 
@@ -20,7 +22,8 @@ class ClientReview extends Component {
   constructor(){
     super();
     this.state = {
-      myData: [] // This will hold the client review data from API
+      myData: [], // This will hold the client review data from API
+      loading:true 
     }
   }
 
@@ -28,91 +31,96 @@ class ClientReview extends Component {
   componentDidMount(){
     // Fetch client review data from the API
     RestClient.GetRequest(AppUrl.ClientReview).then(result => {
-      this.setState({ myData: result });
+      this.setState({myData:result,loading:false});
     }) 
   }
 
   // This function decides what to display on the page
   render() {
-    // Slider configuration settings
-    var settings = {
-      autoPlaySpeed: 3000,
-      autoPlay: true,
-      dots: true,
-      infinite: true,
-      speed: 3000,
-      arrows: false,
-      vertical: true,
-      verticalSwiping: true,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      initialSlide: 1,
-      responsive: [
-        {
-          breakpoint: 1024,
-          settings: {
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            infinite: true,
-            dots: true
-          }
-        },
-        {
-          breakpoint: 600,
-          settings: {
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            initialSlide: 1
-          }
-        },
-        {
-          breakpoint: 480,
-          settings: {
-            slidesToShow: 1,
-            slidesToScroll: 1
-          }
-        }
-      ]
+    if(this.state.loading == true){
+          return <Loading />
     }
+    else{ 
+      // Slider configuration settings
+      var settings = {
+        autoPlaySpeed: 3000,
+        autoPlay: true,
+        dots: true,
+        infinite: true,
+        speed: 3000,
+        arrows: false,
+        vertical: true,
+        verticalSwiping: true,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        initialSlide: 1,
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              infinite: true,
+              dots: true
+            }
+          },
+          {
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              initialSlide: 1
+            }
+          },
+          {
+            breakpoint: 480,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1
+            }
+          }
+        ]
+      }
 
-    // Store API response
-    const MyList = this.state.myData;
+      // Store API response
+      const MyList = this.state.myData;
 
-    // Generate slider views for each client review
-    const MyView = MyList.map(MyList => {
+      // Generate slider views for each client review
+      const MyView = MyList.map(MyList => {
+        return (
+          <div>
+            {/* Centered row for each review */}
+            <Row className="text-center justify-content-center">
+              <Col lg={6} md={6} sm={12}>
+                {/* Client image, name, and review text */}
+                <img className="circleImg" src={MyList.client_img} />
+                <h2 className="reviewName">{MyList.client_title}</h2>
+                <p className="reviewDescription">{MyList.client_description}</p>
+              </Col>
+            </Row>
+          </div>
+        )
+      })
+
+      // Return the full layout
       return (
-        <div>
-          {/* Centered row for each review */}
-          <Row className="text-center justify-content-center">
-            <Col lg={6} md={6} sm={12}>
-              {/* Client image, name, and review text */}
-              <img className="circleImg" src={MyList.client_img} />
-              <h2 className="reviewName">{MyList.client_title}</h2>
-              <p className="reviewDescription">{MyList.client_description}</p>
-            </Col>
-          </Row>
-        </div>
+        <Fragment>
+          {/* Main container with background and center alignment */}
+          <Container fluid={true} className="siderBack text-center">
+
+            {/* Section title */}
+            <h1 className="reviewMainTitle p-3">TESTIMONIAL</h1>
+            <div className="reviewbottom"></div> 
+
+            {/* Slick slider with reviews */}
+            <Slider {...settings}>
+              {MyView}
+            </Slider>
+
+          </Container>
+        </Fragment>
       )
-    })
-
-    // Return the full layout
-    return (
-      <Fragment>
-        {/* Main container with background and center alignment */}
-        <Container fluid={true} className="siderBack text-center">
-
-          {/* Section title */}
-          <h1 className="reviewMainTitle p-3">TESTIMONIAL</h1>
-          <div className="reviewbottom"></div> 
-
-          {/* Slick slider with reviews */}
-          <Slider {...settings}>
-            {MyView}
-          </Slider>
-
-        </Container>
-      </Fragment>
-    )
+    }
   }
 }
 

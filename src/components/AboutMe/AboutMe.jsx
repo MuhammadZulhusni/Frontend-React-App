@@ -1,20 +1,40 @@
-import React, { Component, Fragment } from 'react'
-import { Col, Container, Row } from 'react-bootstrap'
+import React, { Component, Fragment } from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
 import face from '../../asset/image/face.png';
-import { init } from 'ityped'
+import { init } from 'ityped';
+import Loading from '../Loading/Loading'; // Import the Loading component
 
 class AboutMe extends Component {
+  constructor() {
+    super();
+    this.state = {
+      // Manage loading state for initial content display
+      loaderClass: "text-center", // Initially show loader (centered)
+      mainDivClass: "d-none"      // Initially hide main content
+    };
+  }
 
   // This lifecycle method runs after the component is mounted to the DOM
   componentDidMount() {
-    // Select the span element where the text animation will appear
-    const myElement = document.querySelector('#myElement')
+    // Simulate a brief loading period, then show content and start ityped animation
+    // You can remove or adjust the setTimeout if you fetch data from an API here
+    setTimeout(() => {
+      const myElement = document.querySelector('#myElement');
 
-    // Initialize the ityped animation with options
-    init(myElement, {
-      showCursor: false,
-      strings: ['Web Developer!', 'Online Instructor!']
-    })
+      // Initialize the ityped animation with options
+      if (myElement) { // Ensure element exists before initializing ityped
+        init(myElement, {
+          showCursor: false,
+          strings: ['Web Developer!', 'Online Instructor!']
+        });
+      }
+
+      // After "loading" (or data fetch), hide loader and show main content
+      this.setState({
+        loaderClass: "d-none",
+        mainDivClass: "text-center" // Or whatever class makes your main content visible
+      });
+    }, 1000); // 1 second delay to show the loader
   }
 
   render() {
@@ -26,16 +46,19 @@ class AboutMe extends Component {
           <div className="bottom"></div>
 
           <Row>
-            {/* Left column for image */}
-            <Col lg={6} md={6} sm={12}>
+            {/* Column for the loading animation */}
+            <Col className={this.state.loaderClass}>
+              <Loading />
+            </Col>
+
+            {/* Main content columns, visibility controlled by mainDivClass */}
+            <Col lg={6} md={6} sm={12} className={this.state.mainDivClass}>
               <div className="aboutMeImage">
-                {/* Added alt attribute to fix ESLint warning */}
                 <img className="aboutImg" src={face} alt="Profile" />
               </div>
             </Col>
 
-            {/* Right column for text content */}
-            <Col lg={6} md={6} sm={12}>
+            <Col lg={6} md={6} sm={12} className={this.state.mainDivClass}>
               <div className="aboutMeBody">
                 <h2 className="aboutMeDetails">HI There, I'm</h2>
                 <h2 className="aboutMeTitle">Kazi Ariyan</h2>
@@ -47,8 +70,8 @@ class AboutMe extends Component {
           </Row>
         </Container>
       </Fragment>
-    )
+    );
   }
 }
 
-export default AboutMe
+export default AboutMe;

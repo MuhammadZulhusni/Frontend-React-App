@@ -3,6 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import RestClient from '../../RestAPI/RestClient'; // Client for making API requests
 import AppUrl from '../../RestAPI/AppUrl';           // API endpoint definitions
+import Loading from '../Loading/Loading';
 
 // Courses component displays a list of courses fetched from an API.
 class Courses extends Component {
@@ -11,7 +12,8 @@ class Courses extends Component {
           super();
           // Initialize component's state to hold fetched course data.
           this.state={
-               myData:[]
+               myData:[],
+               loading:true 
           }
      }
 
@@ -21,11 +23,17 @@ class Courses extends Component {
           // Make a GET request to the 'CourseHome' API endpoint.
           RestClient.GetRequest(AppUrl.CourseHome).then(result=>{
                // Update the component's state with the fetched data.
-               this.setState({myData:result});
+               this.setState({myData:result,loading:false});
           })
      }
 
      render() {
+
+          if(this.state.loading == true){
+               return <Loading />
+          }
+          else{ 
+
           // Destructure 'myData' from the component's state for easier access.
           const MyList = this.state.myData;
 
@@ -72,6 +80,7 @@ class Courses extends Component {
                    </Container>
               </Fragment>
           )
+        }
      }
 }
 

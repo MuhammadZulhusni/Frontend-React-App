@@ -13,6 +13,7 @@ import TremsPage from '../pages/TremsPage';
 import PrivacyPage from '../pages/PrivacyPage';
 import ProjectDetailPage from '../pages/ProjectDetailPage'
 import CourseDetailsPage from '../pages/CourseDetailsPage'
+import PageNotFound from '../pages/PageNotFound';
 
 // AppRouter component defines the application's routing
 class AppRouter extends Component {
@@ -37,6 +38,9 @@ class AppRouter extends Component {
 
                          {/* Route with URL parameters for course details */}
                          <Route path="/coursedetails/:courseID/:courseName" element={<CourseDetailsPage />} />
+
+                         {/* Use path="*" to catch all unmatched routes and place it last. */}
+                         <Route path="*" element={<PageNotFound/>} />
 
                     </Routes>
                </Fragment>

@@ -1,0 +1,362 @@
+.about-section {
+  background: #f8f9fa;
+  padding: 100px 0;
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.about-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.about-container {
+  position: relative;
+  z-index: 2;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 80px;
+  color: #333; /* Adjusted for light background */
+}
+
+.section-title-aboutme {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 20px;
+  letter-spacing: -1px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  color: black;
+}
+
+
+.title-underline {
+  width: 100px;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.2); /* Adjusted for light background */
+  margin: 0 auto 25px;
+  border-radius: 2px;
+}
+
+.section-subtitle {
+  font-size: 1.2rem;
+  opacity: 0.8; /* Adjusted for light background */
+  margin: 0;
+  font-weight: 300;
+  color: #555; /* Adjusted for light background */
+}
+
+.about-content {
+  align-items: center;
+  min-height: 60vh;
+}
+
+.image-col,
+.content-col {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-image-container {
+  position: relative;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.profile-image-wrapper {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15); /* Adjusted for light background */
+  transition: transform 0.3s ease;
+}
+
+.profile-image-wrapper:hover {
+  transform: translateY(-10px) rotate(2deg);
+}
+
+.profile-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 20px;
+  transition: transform 0.3s ease;
+}
+
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1)); /* Lighter overlay */
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.profile-image-wrapper:hover .image-overlay {
+  opacity: 1;
+}
+
+.floating-elements {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.floating-dot {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.1); /* Adjusted for light background */
+  border-radius: 50%;
+  animation: float 3s ease-in-out infinite;
+}
+
+.dot-1 {
+  width: 12px;
+  height: 12px;
+  top: 20%;
+  right: 10%;
+  animation-delay: 0s;
+}
+
+.dot-2 {
+  width: 8px;
+  height: 8px;
+  top: 60%;
+  right: 15%;
+  animation-delay: 1s;
+}
+
+.dot-3 {
+  width: 6px;
+  height: 6px;
+  top: 80%;
+  right: 25%;
+  animation-delay: 2s;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(-20px);
+    opacity: 1;
+  }
+}
+
+.about-content-wrapper {
+  color: #333; /* Adjusted for light background */
+  max-width: 500px;
+  text-align: left;
+}
+
+.greeting-text {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  gap: 10px;
+}
+
+.wave-emoji {
+  font-size: 2rem;
+  animation: wave 2s ease-in-out infinite;
+}
+
+@keyframes wave {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(20deg);
+  }
+  75% {
+    transform: rotate(-10deg);
+  }
+}
+
+.greeting {
+  font-size: 1.3rem;
+  font-weight: 400;
+  margin: 0;
+  opacity: 0.9;
+  color: #555; /* Adjusted for light background */
+}
+
+.name-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin: 10px 0 30px;
+  background: linear-gradient(45deg, #667eea, #764ba2); /* Kept gradient for emphasis */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Adjusted for light background */
+  letter-spacing: -2px;
+}
+
+.typed-container {
+  margin-bottom: 30px;
+  min-height: 60px;
+}
+
+.typed-text {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #3498db; /* Adjusted for light background */
+  margin: 0;
+  font-style: italic;
+}
+
+#myElement {
+  color: #333; /* Adjusted for light background */
+  font-weight: 600;
+}
+
+.intro-description {
+  margin-bottom: 40px;
+}
+
+.intro-description p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  opacity: 0.85; /* Adjusted for light background */
+  margin: 0;
+  color: #444; /* Adjusted for light background */
+}
+
+.social-links {
+  display: flex;
+  gap: 15px;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  background: rgba(0, 0, 0, 0.05); /* Adjusted for light background */
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px); /* Reduced blur for light background */
+  border: 1px solid rgba(0, 0, 0, 0.1); /* Adjusted for light background */
+  color: #667eea; /* Color for icons */
+}
+
+.social-link:hover {
+  background: rgba(0, 0, 0, 0.1); /* Adjusted for light background */
+  transform: translateY(-3px);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1); /* Adjusted for light background */
+}
+
+.social-icon {
+  font-size: 1.5rem;
+  transition: transform 0.2s ease;
+}
+
+.social-link:hover .social-icon {
+  transform: scale(1.1);
+}
+
+@media (max-width: 992px) {
+  .about-content {
+    text-align: center;
+  }
+  
+  .about-content-wrapper {
+    text-align: center;
+    margin-top: 40px;
+  }
+  
+  .name-title {
+    font-size: 3rem;
+  }
+  
+  .profile-image-container {
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-section {
+    padding: 80px 0;
+  }
+  
+  .section-title2 {
+    font-size: 2.5rem;
+  }
+  
+  .name-title {
+    font-size: 2.5rem;
+    letter-spacing: -1px;
+  }
+  
+  .typed-text {
+    font-size: 1.2rem;
+  }
+  
+  .intro-description p {
+    font-size: 1rem;
+  }
+  
+  .profile-image-container {
+    max-width: 250px;
+  }
+  
+  .social-links {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .section-header {
+    margin-bottom: 50px;
+  }
+  
+  .section-title2 {
+    font-size: 2rem;
+  }
+  
+  .name-title {
+    font-size: 2rem;
+  }
+  
+  .greeting-text {
+    justify-content: center;
+  }
+  
+  .typed-container {
+    min-height: 50px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floating-dot,
+  .wave-emoji,
+  .profile-image-wrapper,
+  .social-link {
+    animation: none;
+    transition: none;
+  }
+  
+  .profile-image-wrapper:hover,
+  .social-link:hover {
+    transform: none;
+  }
+}

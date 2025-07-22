@@ -1,0 +1,313 @@
+/* Video Section */
+.video-section {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 80vh;
+  color: white;
+  will-change: transform;
+}
+
+/* Section Header */
+.section-title2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 1rem;
+  letter-spacing: 1px;
+}
+
+.title-underline2 {
+  width: 60px;
+  height: 3px;
+  background: white;
+  margin: 0 auto 1rem;
+  border-radius: 2px;
+}
+
+.section-subtitle {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.1rem;
+  margin-bottom: 0;
+}
+
+/* Video Content */
+.video-text-col {
+  padding: 2rem;
+}
+
+.video-description {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.video-description p {
+  margin-bottom: 1rem;
+}
+
+.video-description h3,
+.video-description h4,
+.video-description h5 {
+  color: white;
+  margin-bottom: 1rem;
+}
+
+/* Video Player Column */
+.video-player-col {
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Video Card - Optimized for performance */
+.video-card {
+  position: relative;
+  width: 400px;
+  height: 250px;
+  border-radius: 15px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  
+  /* Performance optimizations */
+  transform: translateZ(0); /* Force hardware acceleration */
+  backface-visibility: hidden;
+  perspective: 1000px;
+  will-change: transform, box-shadow;
+  
+  /* Optimized transition - reduced properties */
+  transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.video-card:hover {
+  transform: translate3d(0, -5px, 0) scale3d(1.02, 1.02, 1);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+.video-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, rgba(0, 0, 0, 0.6), rgba(102, 126, 234, 0.3));
+  z-index: 1;
+  /* Hardware acceleration */
+  transform: translateZ(0);
+}
+
+.video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  
+  /* Performance optimizations */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform;
+  transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.video-card:hover .video-overlay {
+  transform: translate3d(0, 0, 0) scale3d(1.1, 1.1, 1);
+}
+
+.play-icon {
+  font-size: 3rem;
+  color: white;
+  margin-bottom: 0.5rem;
+  
+  /* Performance optimizations */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform, color;
+  transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              color 0.25s ease;
+}
+
+.play-text {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transform: translateZ(0); /* Hardware acceleration */
+}
+
+.video-card:hover .play-icon {
+  transform: translate3d(0, 0, 0) scale3d(1.2, 1.2, 1);
+  color: #ffd700;
+}
+
+/* Modal Styling */
+.video-modal .modal-dialog {
+  max-width: 90%;
+}
+
+.video-modal .modal-content {
+  border: none;
+  border-radius: 15px;
+  overflow: hidden;
+  transform: translateZ(0); /* Hardware acceleration */
+}
+
+.video-modal .modal-header {
+  background: #f8f9fa;
+}
+
+.video-modal .modal-title {
+  font-weight: 600;
+  color: #333;
+}
+
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  transform: translateZ(0); /* Hardware acceleration */
+}
+
+.video-wrapper .video-react-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.video-error {
+  text-align: center;
+  padding: 3rem;
+  color: #666;
+}
+
+.video-error p {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .video-card {
+    width: 350px;
+    height: 220px;
+  }
+  
+  .video-text-col,
+  .video-player-col {
+    padding: 1.5rem;
+  }
+  
+  .video-player-col {
+    margin-top: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .section-title2 {
+    font-size: 2rem;
+  }
+  
+  .video-card {
+    width: 300px;
+    height: 180px;
+  }
+  
+  .play-icon {
+    font-size: 2.5rem;
+  }
+  
+  .video-text-col,
+  .video-player-col {
+    padding: 1rem;
+    text-align: center;
+  }
+  
+  .video-description {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+}
+
+@media (max-width: 576px) {
+  .video-section {
+    padding: 3rem 0;
+  }
+  
+  .section-title2 {
+    font-size: 1.8rem;
+  }
+  
+  .video-card {
+    width: 250px;
+    height: 150px;
+  }
+  
+  .play-icon {
+    font-size: 2rem;
+  }
+  
+  .play-text {
+    font-size: 0.9rem;
+  }
+  
+  .video-modal .modal-dialog {
+    max-width: 95%;
+    margin: 1rem auto;
+  }
+}
+
+/* Optimized Animation Enhancement */
+.video-card::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  z-index: 1;
+  
+  /* Performance optimizations */
+  transform: translate3d(-50%, -50%, 0);
+  backface-visibility: hidden;
+  will-change: width, height, border-radius;
+  transition: width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              height 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              border-radius 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.video-card:hover::before {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+}
+
+/* Additional performance utilities */
+@media (prefers-reduced-motion: reduce) {
+  .video-card,
+  .video-overlay,
+  .play-icon,
+  .video-card::before {
+    transition: none;
+  }
+}
+
+/* GPU optimization for supported browsers */
+@supports (will-change: transform) {
+  .video-card,
+  .video-overlay,
+  .play-icon {
+    will-change: transform;
+  }
+}

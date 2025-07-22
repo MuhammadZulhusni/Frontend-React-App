@@ -1,0 +1,383 @@
+.about-desc-section {
+  background: #f8f9fa;
+  padding: 80px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.about-desc-container {
+  position: relative;
+  z-index: 2;
+}
+
+.loading-state,
+.error-state {
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-description-wrapper {
+  background: #f8f9fa;
+  border-radius: 24px;
+  padding: 60px 50px;
+  border: 1px solid #e9ecef;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  overflow: hidden;
+  contain: layout style paint;
+}
+
+.about-description-wrapper:hover {
+  transform: translate3d(0, -2px, 0);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.content-area {
+  position: relative;
+  z-index: 2;
+  color: #2c3e50;
+  line-height: 1.8;
+}
+
+.content-area h1,
+.content-area h2,
+.content-area h3,
+.content-area h4,
+.content-area h5,
+.content-area h6 {
+  color: #2c3e50;
+  font-weight: 700;
+  margin-bottom: 20px;
+  margin-top: 30px;
+}
+
+.content-area h1:first-child,
+.content-area h2:first-child,
+.content-area h3:first-child {
+  margin-top: 0;
+}
+
+.content-area h1 {
+  color: #667eea;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  letter-spacing: -1px;
+}
+
+.content-area h2 {
+  font-size: 2rem;
+  color: #34495e;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.content-area h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: #3498db;
+  border-radius: 2px;
+}
+
+.content-area h3 {
+  font-size: 1.5rem;
+  color: #3498db;
+}
+
+.content-area p {
+  font-size: 1.1rem;
+  color: #34495e;
+  margin-bottom: 20px;
+  text-align: justify;
+}
+
+.content-area p:last-child {
+  margin-bottom: 0;
+}
+
+.content-area ul,
+.content-area ol {
+  margin: 20px 0;
+  padding-left: 30px;
+}
+
+.content-area li {
+  font-size: 1.1rem;
+  color: #34495e;
+  margin-bottom: 8px;
+  position: relative;
+}
+
+.content-area ul li::marker {
+  color: #3498db;
+}
+
+.content-area strong,
+.content-area b {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.content-area em,
+.content-area i {
+  color: #7f8c8d;
+  font-style: italic;
+}
+
+.content-area a {
+  color: #3498db;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.content-area a:hover {
+  color: #2980b9;
+  border-bottom-color: #2980b9;
+}
+
+.content-area blockquote {
+  background: #ecf0f1;
+  border-left: 4px solid #3498db;
+  margin: 25px 0;
+  padding: 20px 30px;
+  font-style: italic;
+  font-size: 1.2rem;
+  border-radius: 0 8px 8px 0;
+}
+
+.content-area code {
+  background: #f1c40f;
+  color: #2c3e50;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.content-area pre {
+  background: #2c3e50;
+  color: #ecf0f1;
+  padding: 20px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 20px 0;
+}
+
+.decoration-elements {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 1;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+.deco-line {
+  position: absolute;
+  background: rgba(52, 152, 219, 0.15);
+  border-radius: 2px;
+}
+
+.line-1 {
+  width: 100px;
+  height: 2px;
+  top: 30px;
+  right: 30px;
+  transform: rotate(45deg) translate3d(0, 0, 0);
+}
+
+.line-2 {
+  width: 60px;
+  height: 2px;
+  bottom: 40px;
+  left: 40px;
+  transform: rotate(-45deg) translate3d(0, 0, 0);
+}
+
+.deco-dot {
+  position: absolute;
+  background: rgba(52, 152, 219, 0.2);
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.dot-1 {
+  width: 8px;
+  height: 8px;
+  top: 60px;
+  right: 60px;
+  animation-delay: 0s;
+}
+
+.dot-2 {
+  width: 6px;
+  height: 6px;
+  bottom: 80px;
+  left: 80px;
+  animation-delay: 1.5s;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: translate3d(0, 0, 0) scale(1.1);
+  }
+}
+
+.section-divider {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.divider-line {
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #bdc3c7, transparent);
+}
+
+.divider-dot {
+  width: 6px;
+  height: 6px;
+  background: #3498db;
+  border-radius: 50%;
+}
+
+@media (max-width: 992px) {
+  .about-desc-section {
+    padding: 60px 0;
+  }
+  
+  .about-description-wrapper {
+    padding: 50px 40px;
+    border-radius: 20px;
+  }
+  
+  .content-area h1 {
+    font-size: 2.2rem;
+  }
+  
+  .content-area h2 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-desc-section {
+    padding: 50px 0;
+  }
+  
+  .about-description-wrapper {
+    padding: 40px 30px;
+    border-radius: 16px;
+    transition: none;
+  }
+  
+  .about-description-wrapper:hover {
+    transform: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  .content-area {
+    line-height: 1.7;
+  }
+  
+  .content-area h1 {
+    font-size: 2rem;
+  }
+  
+  .content-area h2 {
+    font-size: 1.6rem;
+  }
+  
+  .content-area h3 {
+    font-size: 1.3rem;
+  }
+  
+  .content-area p,
+  .content-area li {
+    font-size: 1rem;
+  }
+  
+  .line-1 {
+    width: 60px;
+    top: 20px;
+    right: 20px;
+  }
+  
+  .line-2 {
+    width: 40px;
+    bottom: 30px;
+    left: 30px;
+  }
+  
+  .deco-dot {
+    animation: none;
+    opacity: 0.4;
+  }
+}
+
+@media (max-width: 576px) {
+  .about-desc-section {
+    padding: 40px 0;
+  }
+  
+  .about-description-wrapper {
+    padding: 30px 20px;
+    border-radius: 12px;
+  }
+  
+  .content-area h1 {
+    font-size: 1.8rem;
+  }
+  
+  .content-area h2 {
+    font-size: 1.5rem;
+  }
+  
+  .content-area p {
+    text-align: left;
+  }
+  
+  .content-area ul,
+  .content-area ol {
+    padding-left: 25px;
+  }
+  
+  .content-area blockquote {
+    padding: 15px 20px;
+    font-size: 1.1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-description-wrapper,
+  .deco-dot,
+  .content-area a {
+    transition: none !important;
+    animation: none !important;
+  }
+  
+  .about-description-wrapper:hover {
+    transform: none !important;
+  }
+}

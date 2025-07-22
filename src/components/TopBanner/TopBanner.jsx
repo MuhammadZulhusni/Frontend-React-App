@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
-import { Col, Container, Row, Button } from 'react-bootstrap';
+import { Col, Container, Row, Button} from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { Fade, Slide } from 'react-awesome-reveal';
 import RestClient from '../../RestAPI/RestClient';
 import AppUrl from '../../RestAPI/AppUrl';
@@ -58,7 +59,33 @@ class TopBanner extends Component {
                   </Fade>
 
                   <Slide direction="up" delay={200} triggerOnce>
-                    <Button variant="primary">Learn More</Button>
+                    <Button
+                      as={Link}
+                      to="/about"
+                      variant="primary"
+                      className="modern-cta-button"
+                      style={{
+                        borderRadius: '50px',
+                        padding: '12px 32px',
+                        fontWeight: '600',
+                        fontSize: '16px',
+                        border: 'none',
+                        boxShadow: '0 8px 25px rgba(0, 123, 255, 0.3)',
+                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                        textTransform: 'none',
+                        letterSpacing: '0.5px'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.target.style.transform = 'translateY(-2px)';
+                        e.target.style.boxShadow = '0 12px 35px rgba(0, 123, 255, 0.4)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.target.style.transform = 'translateY(0)';
+                        e.target.style.boxShadow = '0 8px 25px rgba(0, 123, 255, 0.3)';
+                      }}
+                      >
+                      Let's Get Started
+                    </Button>
                   </Slide>
                 </Col>
               </Row>

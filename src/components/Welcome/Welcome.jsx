@@ -27,8 +27,8 @@ class Welcome extends Component {
 
                     <Zoom triggerOnce>
                       <h2 className="maintitle">
-                        An exemplary<br />
-                        learning community
+                        Powerful REST APIs<br />
+                        built for developers
                       </h2>
                     </Zoom>
 
@@ -37,19 +37,22 @@ class Welcome extends Component {
                       <Fade direction="up" triggerOnce>
                         <Row>
                           <Col lg={4} md={6} sm={12}>
-                            <img src={pageone} alt="Easy as it gets" />
-                            <h1 className="serviceName">Easy As it Gets</h1>
-                            <p className="serviceDescription">Lorem ipsum dolor</p>
+                            {/* Applied fixed-size-icon class */}
+                            <img src={pageone} alt="Simple Integration" className="fixed-size-icon" />
+                            <h1 className="serviceName">Simple Integration</h1>
+                            <p className="serviceDescription">Get up and running in minutes with our comprehensive documentation and code examples</p>
                           </Col>
                           <Col lg={4} md={6} sm={12}>
-                            <img src={pagetwo} alt="Teach your way" />
-                            <h1 className="serviceName">Teach The Way You Want</h1>
-                            <p className="serviceDescription">Lorem ipsum dolor</p>
+                            {/* Applied fixed-size-icon class */}
+                            <img src={pagetwo} alt="Flexible Architecture" className="fixed-size-icon" />
+                            <h1 className="serviceName">Flexible Architecture</h1>
+                            <p className="serviceDescription">RESTful design principles with JSON responses that adapt to your workflow</p>
                           </Col>
                           <Col lg={4} md={6} sm={12}>
-                            <img src={pagethree} alt="The small matter" />
-                            <h1 className="serviceName">The Small Matter</h1>
-                            <p className="serviceDescription">Lorem ipsum dolor</p>
+                            {/* Applied fixed-size-icon class */}
+                            <img src={pagethree} alt="Enterprise Ready" className="fixed-size-icon" />
+                            <h1 className="serviceName">Enterprise Ready</h1>
+                            <p className="serviceDescription">Secure, scalable, and reliable APIs with 99.9% uptime guarantee</p>
                           </Col>
                         </Row>
                       </Fade>
@@ -58,37 +61,40 @@ class Welcome extends Component {
                       <Slide direction="up" triggerOnce>
                         <Row className="intro-footer bg-base text-center mt-5">
                           <Col lg={4} md={6} sm={12}>
-                            <Row>
+                            <Row className="align-items-center"> {/* Added align-items-center for vertical alignment */}
                               <Col lg={6}>
-                                <img className="sideImg" src={imgone} alt="Development" />
+                                {/* Applied fixed-size-side-img class */}
+                                <img className="sideImg fixed-size-side-img" src={imgone} alt="Authentication" />
                               </Col>
                               <Col lg={6}>
-                                <h5 className="text-justify homeIntro">Development</h5>
-                                <p className="text-justify serviceDescription">Lorem ipsum dolor</p>
-                              </Col>
-                            </Row>
-                          </Col>
-
-                          <Col lg={4} md={6} sm={12}>
-                            <Row>
-                              <Col lg={6}>
-                                <img className="sideImg" src={imgtwo} alt="Web Design" />
-                              </Col>
-                              <Col lg={6}>
-                                <h5 className="text-justify homeIntro">Web Design</h5>
-                                <p className="text-justify serviceDescription">Lorem ipsum dolor</p>
+                                <h5 className="text-justify homeIntro">Authentication</h5>
+                                <p className="text-justify serviceDescription">Secure OAuth 2.0 and API key authentication with role-based access control</p>
                               </Col>
                             </Row>
                           </Col>
 
                           <Col lg={4} md={6} sm={12}>
-                            <Row>
+                            <Row className="align-items-center"> {/* Added align-items-center for vertical alignment */}
                               <Col lg={6}>
-                                <img className="sideImg" src={imgthree} alt="Ecommerce" />
+                                {/* Applied fixed-size-side-img class */}
+                                <img className="sideImg fixed-size-side-img" src={imgtwo} alt="Real-time Data" />
                               </Col>
                               <Col lg={6}>
-                                <h5 className="text-justify homeIntro">Ecommerce</h5>
-                                <p className="text-justify serviceDescription">Lorem ipsum dolor</p>
+                                <h5 className="text-justify homeIntro">Real-time Data</h5>
+                                <p className="text-justify serviceDescription">WebSocket support and webhook notifications for instant data synchronization</p>
+                              </Col>
+                            </Row>
+                          </Col>
+
+                          <Col lg={4} md={6} sm={12}>
+                            <Row className="align-items-center"> {/* Added align-items-center for vertical alignment */}
+                              <Col lg={6}>
+                                {/* Applied fixed-size-side-img class */}
+                                <img className="sideImg fixed-size-side-img" src={imgthree} alt="Rate Limiting" />
+                              </Col>
+                              <Col lg={6}>
+                                <h5 className="text-justify homeIntro">Rate Limiting</h5>
+                                <p className="text-justify serviceDescription">Smart throttling and caching mechanisms to optimize performance</p>
                               </Col>
                             </Row>
                           </Col>
@@ -108,3 +114,4 @@ class Welcome extends Component {
 }
 
 export default Welcome;
+

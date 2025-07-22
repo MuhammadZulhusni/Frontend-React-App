@@ -9,7 +9,8 @@ import RestClient from '../../RestAPI/RestClient';
 import AppUrl from '../../RestAPI/AppUrl';
 
 import Loading from '../Loading/Loading';
-import { Fade } from 'react-awesome-reveal'; 
+import { Fade } from 'react-awesome-reveal';
+
 
 class ClientReview extends Component {
   constructor() {
@@ -31,17 +32,20 @@ class ClientReview extends Component {
       return <Loading />;
     } else {
       const settings = {
-        autoPlaySpeed: 3000,
+        autoPlaySpeed: 5000,
         autoPlay: true,
         dots: true,
         infinite: true,
-        speed: 3000,
+        speed: 500,
         arrows: false,
-        vertical: true,
-        verticalSwiping: true,
+        vertical: false,
+        verticalSwiping: false,
         slidesToShow: 1,
         slidesToScroll: 1,
-        initialSlide: 1,
+        initialSlide: 0,
+        cssEase: 'ease-in-out',
+        lazyLoad: 'ondemand',
+        pauseOnHover: true,
         responsive: [
           {
             breakpoint: 1024,
@@ -57,7 +61,7 @@ class ClientReview extends Component {
             settings: {
               slidesToShow: 1,
               slidesToScroll: 1,
-              initialSlide: 1
+              initialSlide: 0
             }
           },
           {
@@ -72,14 +76,22 @@ class ClientReview extends Component {
 
       const MyList = this.state.myData;
 
-      const MyView = MyList.map((MyList, index) => {
+      const MyView = MyList.map((review, index) => {
         return (
-          <div key={index}>
+          <div key={index} className="testimonial-slide">
             <Row className="text-center justify-content-center">
-              <Col lg={6} md={6} sm={12}>
-                <img className="circleImg" src={MyList.client_img} alt={MyList.client_title} />
-                <h2 className="reviewName">{MyList.client_title}</h2>
-                <p className="reviewDescription">{MyList.client_description}</p>
+              <Col lg={8} md={10} sm={12}>
+                <div className="testimonial-card">
+                  <img 
+                    className="client-avatar" 
+                    src={review.client_img} 
+                    alt={review.client_title}
+                    loading="lazy"
+                  />
+                  <p className="testimonial-text">"{review.client_description}"</p>
+                  <h4 className="client-name">{review.client_title}</h4>
+                  <div className="stars">★★★★★</div>
+                </div>
               </Col>
             </Row>
           </div>
@@ -88,16 +100,23 @@ class ClientReview extends Component {
 
       return (
         <Fragment>
-          <Container fluid={true} className="siderBack text-center">
-            <Fade triggerOnce>
-              <h1 className="reviewMainTitle p-3">TESTIMONIAL</h1>
-              <div className="reviewbottom"></div>
-            </Fade>
+          <section className="testimonial-section">
+            <Container fluid={true} className="testimonial-container">
+              <Fade triggerOnce>
+                <div className="section-header">
+                  <h2 className="section-title">What Our Clients Say</h2>
+                  <div className="title-underline"></div>
+                  <p className="section-subtitle2">Real feedback from our valued customers</p>
+                </div>
+              </Fade>
 
-            <Slider {...settings}>
-              {MyView}
-            </Slider>
-          </Container>
+              <div className="testimonial-slider">
+                <Slider {...settings}>
+                  {MyView}
+                </Slider>
+              </div>
+            </Container>
+          </section>
         </Fragment>
       );
     }

@@ -1,102 +1,184 @@
-import React, { Component, Fragment } from 'react'
-// React Bootstrap components for layout and styling
-import { Col, Container, Row, Button } from 'react-bootstrap' // Added 'Button' for the live preview link
-// Local placeholder image (used as a fallback or initial image)
-import projectDetails from '../../asset/image/pdetails.png';
-// FontAwesome for icons
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheckSquare } from '@fortawesome/free-solid-svg-icons'
-// Custom API client and URL constants
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { Container, Row, Col, Button, Badge } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExternalLinkAlt, faCodeBranch, faLayerGroup, faCheck } from '@fortawesome/free-solid-svg-icons';
 import RestClient from '../../RestAPI/RestClient';
 import AppUrl from '../../RestAPI/AppUrl';
-// Library to parse HTML strings into React components
-import parse from 'html-react-parser'; // Assuming 'html-react-parser' is the correct package now
+import parse from 'html-react-parser';
+import { motion } from 'framer-motion';
+import Loading from '../Loading/Loading';
+import '../../asset/css/ProjectDetails.css';
 
-class ProjectDetails extends Component {
-     // Component constructor: initializes state and receives props
-     constructor(props){
-          // Always call super(props) in a class component constructor if using props
-          super(props);
-          this.state={
-               MyProjectId: props.id, // Project ID passed from the parent component (from URL)
-               // Initial placeholder values for project details
-               img_two:"...",
-               projectname:"...",
-               project_description:"...",
-               project_features:"...",
-               live_preview:"..."
-               // Note: For robust apps, also include 'loading' and 'error' states here
-          }
-     }
-
-     // Lifecycle method: runs after the component is first displayed
-     componentDidMount(){
-          // Scroll to the top of the page (good for detail views)
-          window.scroll(0,0);
-          
-          // Fetch project details from the API using the project ID
-          RestClient.GetRequest(AppUrl.ProjectDetails + this.state.MyProjectId)
-          .then(result => {
-              // Update component state with fetched data
-              // Assumes API returns an array, with the project object as the first item
-              this.setState({
-                img_two: result[0]['img_two'],
-                projectname: result[0]['project_name'],
-                project_description: result[0]['project_description'],
-                project_features: result[0]['project_features'],
-                live_preview: result[0]['live_preview'] 
-              });
-              // Note: Add error handling and check if result[0] exists before accessing properties
-         })
-         .catch(error => {
-             // Handle API call errors (e.g., network issues, server errors)
-             // Set an 'error' state here and display an error message in render()
-             console.error("Error fetching project details:", error);
-         });
+class ProjectDetailsModern extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            MyProjectId: props.id,
+            img_two: "",
+            projectname: "",
+            project_description: "",
+            project_features: "",
+            live_preview: "",
+            technologies: [],
+            loading: true,
+            error: null
+        };
     }
 
-    // Render method: describes what the component displays
-     render() {
-          return (
-              <Fragment>
-                   {/* Main container with top margin for spacing */}
-                   <Container className="mt-5">
-                        <Row>
-                            {/* Column for the project image */}
-                            <Col lg={6} md={6} sm={12}>
-                                <div className="about-thumb-wrap after-shape">
-                                    {/* Project image display */}
-                                    {/* Consider using <Image> from react-bootstrap for better styling: <Image src={this.state.img_two} fluid rounded className="shadow-sm" /> */}
-                                    <img src={this.state.img_two} alt={this.state.projectname} />
-                                </div>
+    componentDidMount() {
+        window.scrollTo(0, 0);
+        
+        RestClient.GetRequest(AppUrl.ProjectDetails + this.state.MyProjectId)
+            .then(result => {
+                if (result && result.length > 0) {
+                    this.setState({
+                        img_two: result[0]['img_two'],
+                        projectname: result[0]['project_name'],
+                        project_description: result[0]['project_description'],
+                        project_features: result[0]['project_features'],
+                        live_preview: result[0]['live_preview'],
+                        technologies: result[0]['technologies'] ? result[0]['technologies'].split(',') : [],
+                        loading: false
+                    });
+                } else {
+                    this.setState({
+                        error: "Project not found",
+                        loading: false
+                    });
+                }
+            })
+            .catch(error => {
+                this.setState({
+                    error: "Failed to load project details",
+                    loading: false
+                });
+                console.error("Error fetching project details:", error);
+            });
+    }
+
+    render() {
+        if (this.state.loading) {
+            return <Loading />;
+        }
+
+        if (this.state.error) {
+            return (
+                <Container className="error-container">
+                    <div className="error-content">
+                        <h3>{this.state.error}</h3>
+                        <Button 
+                            variant="outline-dark" 
+                            href="/projects" 
+                            className="back-button"
+                        >
+                            Return to Projects
+                        </Button>
+                    </div>
+                </Container>
+            );
+        }
+
+        return (
+            <div className="project-details-modern">
+                {/* Hero Section */}
+                <section className="project-hero">
+                    <Container>
+                        <Row className="align-items-center">
+                            <Col lg={6} className="hero-content">
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.6 }}
+                                >
+                                    <Badge className="project-badge">Featured Project</Badge>
+                                    <h1>{this.state.projectname}</h1>
+                                    <p className="hero-description">
+                                        {parse(this.state.project_description)}
+                                    </p>
+                                    <div className="tech-stack">
+                                        {this.state.technologies.map((tech, index) => (
+                                            <span key={index} className="tech-item">{tech.trim()}</span>
+                                        ))}
+                                    </div>
+                                </motion.div>
                             </Col>
-
-                            {/* Column for project text details */}
-                            <Col lg={6} md={6} sm={12} className="mt-5"> {/* Added top margin for consistency */}
-                                <div className="project-details">
-                                    {/* Project Name Heading */}
-                                    <h1 className="projectDetailsText"> {this.state.projectname} </h1>
-                                    {/* Project Description, parsed as HTML */}
-                                    <p className="detailsName">
-                                    { parse(this.state.project_description) }
-                                    </p>
-
-                                    {/* Project Features, parsed as HTML */}
-                                    <p className="cardSubTitle text-justify">
-                                        <FontAwesomeIcon className="iconBullent" icon={faCheckSquare} />
-                                        { parse(this.state.project_features) }
-                                    </p>
-
-                                    {/* Live Preview Button */}
-                                    {/* Ensure live_preview is a valid URL before rendering, and add target="_blank" for new tab */}
-                                    <Button variant="info" href={this.state.live_preview}> Live Preview </Button>
-                                </div>
+                            <Col lg={6} className="hero-image">
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0.9 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ duration: 0.6, delay: 0.2 }}
+                                >
+                                    <img 
+                                        src={this.state.img_two} 
+                                        alt={this.state.projectname}
+                                        className="img-fluid"
+                                    />
+                                </motion.div>
                             </Col>
                         </Row>
-                   </Container>
-              </Fragment>
-          )
-     }
+                    </Container>
+                </section>
+
+                {/* Project Details Section */}
+                <section className="project-content-section">
+                    <Container>
+                        <Row>
+                            <Col lg={8} className="mx-auto">
+                                <div className="content-card">
+                                    <h2>
+                                        <FontAwesomeIcon icon={faLayerGroup} className="me-2" />
+                                        Project Features
+                                    </h2>
+                                    <ul className="feature-list">
+                                        {this.state.project_features.split('\n').map((feature, index) => (
+                                            <motion.li
+                                                key={index}
+                                                initial={{ opacity: 0, x: -20 }}
+                                                animate={{ opacity: 1, x: 0 }}
+                                                transition={{ duration: 0.4, delay: index * 0.1 }}
+                                            >
+                                                <FontAwesomeIcon icon={faCheck} className="feature-icon" />
+                                                <span>{parse(feature)}</span>
+                                            </motion.li>
+                                        ))}
+                                    </ul>
+                                </div>
+
+                                {this.state.live_preview && (
+                                    <motion.div
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        transition={{ duration: 0.6, delay: 0.4 }}
+                                        className="cta-section"
+                                    >
+                                        <Button 
+                                            href={this.state.live_preview} 
+                                            target="_blank" 
+                                            rel="noopener noreferrer"
+                                            className="live-preview-button"
+                                        >
+                                            <FontAwesomeIcon icon={faExternalLinkAlt} className="me-2" />
+                                            View Live Project
+                                        </Button>
+                                        <Button
+                                        as={Link}
+                                        to="/porfolio"
+                                        variant="outline-dark"
+                                        className="back-button"
+                                        >
+                                        <FontAwesomeIcon icon={faCodeBranch} className="me-2" />
+                                        All Projects
+                                        </Button>
+                                    </motion.div>
+                                )}
+                            </Col>
+                        </Row>
+                    </Container>
+                </section>
+            </div>
+        );
+    }
 }
 
-export default ProjectDetails
+export default ProjectDetailsModern;

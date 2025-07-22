@@ -8,9 +8,10 @@ import {
   faClipboard, 
   faLayerGroup, 
   faTag,
-  faChalkboardTeacher
+  faChalkboardTeacher,
+  faPlay,
+  faExternalLinkAlt
 } from '@fortawesome/free-solid-svg-icons';
-import { Player, BigPlayButton } from 'video-react';
 import parse from 'html-react-parser';
 import '../../asset/css/courseDetails.css';
 
@@ -43,16 +44,43 @@ class CourseDetails extends Component {
       video_url = defaultValues.videoUrl
     } = course;
 
-    const videoUrl = video_url || "https://media.w3.org/2010/05/sintel/trailer_hd.mp4";
-
     const courseFeatures = [
       { icon: faUser, label: "Enrolled", value: `${total_student} students` },
       { icon: faClock, label: "Duration", value: `${total_duration} hours` },
       { icon: faClipboard, label: "Lectures", value: total_lecture },
-      { icon: faLayerGroup, label: "Categories", value: "Technology" },
-      { icon: faTag, label: "Tags", value: "Android, JavaScript" },
-      { icon: faChalkboardTeacher, label: "Instructor", value: "Kazi Ariyan" }
+      { icon: faLayerGroup, label: "Categories", value: "Technology, Development" },
+      { icon: faTag, label: "Tags", value: "Android, JavaScript, React, Laravel" },
+      { icon: faChalkboardTeacher, label: "Instructor", value: "Zulhusni" }
     ];
+
+    // Inline styles for preview section
+    const previewCardStyle = {
+      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      borderRadius: '15px',
+      overflow: 'hidden',
+      minHeight: '300px',
+      cursor: video_url ? 'pointer' : 'default',
+      transition: 'transform 0.3s ease, box-shadow 0.3s ease'
+    };
+
+    const previewContentStyle = {
+      background: 'linear-gradient(45deg, rgba(0, 0, 0, 0.7), rgba(102, 126, 234, 0.4))',
+      minHeight: '300px',
+      cursor: video_url ? 'pointer' : 'default',
+      transition: 'transform 0.3s ease, box-shadow 0.3s ease'
+    };
+
+    const playIconStyle = {
+      fontSize: '4rem',
+      color: 'white',
+      opacity: '0.9'
+    };
+
+    const handlePreviewClick = () => {
+      if (video_url) {
+        window.open(video_url, '_blank', 'noopener,noreferrer');
+      }
+    };
 
     return (
       <div className="course-details-page">
@@ -108,7 +136,7 @@ class CourseDetails extends Component {
           </Container>
         </section>
 
-        {/* Course Skills & Video Section */}
+        {/* Course Skills & Preview Section */}
         <section className="course-skills-video py-5 bg-light">
           <Container>
             <Row className="g-4">
@@ -125,22 +153,74 @@ class CourseDetails extends Component {
               </Col>
 
               <Col lg={6}>
-                <Card className="video-card shadow-sm">
-                  <Card.Body className="p-0">
-                    {videoUrl ? (
-                      <div className="video-container">
-                        <Player src={videoUrl} playsInline>
-                          <BigPlayButton position="center" />
-                        </Player>
+                {/* Clickable Preview Card */}
+                <div 
+                  className="shadow-sm" 
+                  style={previewCardStyle}
+                  onClick={handlePreviewClick}
+                  onMouseEnter={(e) => {
+                    if (video_url) {
+                      e.currentTarget.style.transform = 'scale(1.02)';
+                      e.currentTarget.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.3)';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'scale(1)';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }}
+                >
+                  <div className="p-4">
+                    <h3 className="text-white mb-3 fw-bold d-flex align-items-center">
+                      Course Preview 
+                      {video_url && (
+                        <FontAwesomeIcon 
+                          icon={faExternalLinkAlt} 
+                          className="ms-2" 
+                          style={{ fontSize: '1.2rem' }}
+                        />
+                      )}
+                    </h3>
+                    
+                    <div 
+                      className="position-relative d-flex flex-column justify-content-center align-items-center rounded"
+                      style={previewContentStyle}
+                    >
+                      {/* Preview Content Overlay */}
+                      <div 
+                        className="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center"
+                        style={{
+                          backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                          zIndex: 10
+                        }}
+                      >
+                        <FontAwesomeIcon
+                          icon={video_url ? faExternalLinkAlt : faPlay}
+                          style={playIconStyle}
+                          className="mb-3"
+                        />
+                        <h4 className="text-white fw-semibold mb-2">
+                          {video_url ? 'Watch Preview' : 'Course Preview'}
+                        </h4>
+                        <p className="text-white-50 mb-0 text-center px-3">
+                          {video_url 
+                            ? 'Click to watch the course preview in a new tab'
+                            : 'Preview not available at the moment'
+                          }
+                        </p>
+                        {video_url && (
+                          <small className="text-white-50 mt-2">
+                            Opens in new tab
+                          </small>
+                        )}
+                        {!video_url && (
+                          <small className="text-white-50 mt-2">
+                            Please check the video URL in the course data
+                          </small>
+                        )}
                       </div>
-                    ) : (
-                      <div className="video-placeholder">
-                        <p>Video Not Available</p>
-                        <small>Please check the video URL in the course data.</small>
-                      </div>
-                    )}
-                  </Card.Body>
-                </Card>
+                    </div>
+                  </div>
+                </div>
               </Col>
             </Row>
           </Container>

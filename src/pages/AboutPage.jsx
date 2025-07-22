@@ -21,10 +21,10 @@ class AboutPage extends Component {
                // Fragment wraps all elements without adding extra tags to the DOM
                <Fragment>
                     {/* Top navigation bar */}
-                    <TopNavigation title="About Us" /> 
+                    <TopNavigation title="About" /> 
 
-                    {/* Top section with "About Us" title */}
-                    <PageTop pagetitle="About Us" />
+                    {/* Top section with "About" title */}
+                    <PageTop pagetitle="About" />
 
                     {/* About Me section with profile and intro */}
                     <AboutMe />

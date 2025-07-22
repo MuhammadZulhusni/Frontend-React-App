@@ -1,16 +1,12 @@
-import React, { Component, Fragment } from 'react'; // Imports React core and utility components
-import { Card, Col, Container, Row, Button } from 'react-bootstrap'; // Imports Bootstrap components
-import { Link } from 'react-router-dom'; // Imports Link component for navigation
-import RestClient from '../../RestAPI/RestClient'; // Imports custom REST API client
-import AppUrl from '../../RestAPI/AppUrl'; // Imports API URL configurations
-import Loading from '../Loading/Loading'; // Imports custom loading component
-import WentWrong from '../WentWrong/WentWrong'; // Imports error display component
+import React, { Component, Fragment } from 'react';
+import { Card, Col, Container, Row, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import RestClient from '../../RestAPI/RestClient';
+import AppUrl from '../../RestAPI/AppUrl';
+import Loading from '../Loading/Loading';
+import WentWrong from '../WentWrong/WentWrong';
 import { Fade } from 'react-awesome-reveal'; 
 
-/**
- * AllProjects component: Fetches and displays a list of all projects.
- * Incorporates loading and error handling states for a robust user experience.
- */
 class AllProjects extends Component {
   constructor() {
     super();

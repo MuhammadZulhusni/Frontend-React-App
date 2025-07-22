@@ -1,13 +1,12 @@
 import React, { Component, Fragment } from 'react';
 import { Col, Container, Form, Row, Button, Alert } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faPhone, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import RestClient from '../../RestAPI/RestClient';
 import AppUrl from '../../RestAPI/AppUrl';
 import Loading from '../Loading/Loading';
-
-// Animation
 import { Fade } from 'react-awesome-reveal';
+import '../../asset/css/contact.css';
 
 class ContactSec extends Component {
     constructor() {
@@ -33,7 +32,8 @@ class ContactSec extends Component {
         });
     }
 
-    sendContact = () => {
+    sendContact = (e) => {
+        e.preventDefault();
         let name = document.getElementById("name").value;
         let email = document.getElementById("email").value;
         let message = document.getElementById("message").value;
@@ -48,15 +48,13 @@ class ContactSec extends Component {
         RestClient.PostRequest(AppUrl.ContactSend, jsonObject).then(result => {
             if (result) {
                 this.setState({
-                    messageSuccess: "Message sent successfully.",
+                    messageSuccess: "Message sent successfully! We'll get back to you soon.",
                     messageError: ""
                 });
-                document.getElementById("name").value = "";
-                document.getElementById("email").value = "";
-                document.getElementById("message").value = "";
+                document.getElementById("contactForm").reset();
             } else {
                 this.setState({
-                    messageError: "Failed to send message.",
+                    messageError: "Failed to send message. Please try again.",
                     messageSuccess: ""
                 });
             }
@@ -74,50 +72,104 @@ class ContactSec extends Component {
         } else {
             return (
                 <Fragment>
-                    <Container className="mt-5">
-                        <Row>
-                            <Col lg={6} md={6} sm={12}>
+                    <Container className="contact-section">
+                        <Row className="align-items-center">
+                            <Col lg={6} md={6} sm={12} className="contact-form-col">
                                 <Fade direction="up" triggerOnce>
-                                    <h1 className="serviceName">Quick Connect</h1>
+                                    <div className="section-header">
+                                        <h2 className="section-title">Get In Touch</h2>
+                                        <p className="section-subtitle">We'd love to hear from you</p>
+                                    </div>
                                 </Fade>
 
                                 {this.state.messageSuccess && (
-                                    <Alert variant="success">{this.state.messageSuccess}</Alert>
+                                    <Alert variant="success" className="alert-message">
+                                        {this.state.messageSuccess}
+                                    </Alert>
                                 )}
                                 {this.state.messageError && (
-                                    <Alert variant="danger">{this.state.messageError}</Alert>
+                                    <Alert variant="danger" className="alert-message">
+                                        {this.state.messageError}
+                                    </Alert>
                                 )}
 
-                                <Form>
-                                    <Form.Group>
-                                        <Form.Label>Your Name</Form.Label>
-                                        <Form.Control id="name" type="text" placeholder="Enter Your Name" />
+                                <Form id="contactForm" className="contact-form">
+                                    <Form.Group className="form-group">
+                                        <Form.Control 
+                                            id="name" 
+                                            type="text" 
+                                            placeholder="Your Name" 
+                                            className="form-input"
+                                        />
                                     </Form.Group>
 
-                                    <Form.Group>
-                                        <Form.Label>Your Email</Form.Label>
-                                        <Form.Control id="email" type="email" placeholder="Enter Your Email" />
+                                    <Form.Group className="form-group">
+                                        <Form.Control 
+                                            id="email" 
+                                            type="email" 
+                                            placeholder="Your Email" 
+                                            className="form-input"
+                                        />
                                     </Form.Group>
 
-                                    <Form.Group>
-                                        <Form.Label>Message</Form.Label>
-                                        <Form.Control id="message" as="textarea" rows={3} />
+                                    <Form.Group className="form-group">
+                                        <Form.Control 
+                                            id="message" 
+                                            as="textarea" 
+                                            rows={5} 
+                                            placeholder="Your Message"
+                                            className="form-input"
+                                        />
                                     </Form.Group>
 
-                                    <Button onClick={this.sendContact} variant="primary">
-                                        Submit
+                                    <Button 
+                                        onClick={this.sendContact} 
+                                        variant="primary" 
+                                        className="submit-btn"
+                                    >
+                                        Send Message
                                     </Button>
                                 </Form>
                             </Col>
 
-                            <Col lg={6} md={6} sm={12}>
+                            <Col lg={6} md={6} sm={12} className="contact-info-col">
                                 <Fade direction="up" delay={150} triggerOnce>
-                                    <h1 className="serviceName">Discuss Now</h1>
-                                    <p className="serviceDescription">
-                                        {this.state.address}<br />
-                                        <FontAwesomeIcon icon={faEnvelope} /> Email: {this.state.email}<br />
-                                        <FontAwesomeIcon icon={faPhone} /> Phone: {this.state.phone}
-                                    </p>
+                                    <div className="contact-info">
+                                        <h2 className="info-title">Contact Information</h2>
+                                        <p className="info-description">
+                                            Feel free to reach out through any of these channels
+                                        </p>
+                                        
+                                        <div className="info-item">
+                                            <div className="info-icon">
+                                                <FontAwesomeIcon icon={faMapMarkerAlt} />
+                                            </div>
+                                            <div className="info-content">
+                                                <h3>Address</h3>
+                                                <p>{this.state.address}</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="info-item">
+                                            <div className="info-icon">
+                                                <FontAwesomeIcon icon={faEnvelope} />
+                                            </div>
+                                            <div className="info-content">
+                                                <h3>Email</h3>
+                                                <p>{this.state.email}</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="info-item">
+                                            <div className="info-icon">
+                                                <FontAwesomeIcon icon={faPhone} />
+                                            </div>
+                                            <div className="info-content">
+                                                <h3>Phone</h3>
+                                                <p>{this.state.phone}</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </Fade>
                             </Col>
                         </Row>

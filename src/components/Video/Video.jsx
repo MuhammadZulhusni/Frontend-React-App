@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Col, Container, Modal, Row, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faVideoSlash } from '@fortawesome/free-solid-svg-icons';
+import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import 'video-react/dist/video-react.css';
 import { Player, BigPlayButton } from 'video-react';
 import RestClient from '../../RestAPI/RestClient';
@@ -9,6 +9,7 @@ import AppUrl from '../../RestAPI/AppUrl';
 import parse from 'html-react-parser'; 
 import Loading from '../Loading/Loading';
 import { Fade, Slide } from 'react-awesome-reveal'; 
+import '../../asset/css/video.css'; 
 
 class Video extends Component {
      constructor() {
@@ -42,47 +43,70 @@ class Video extends Component {
           } else {
                return (
                     <Fragment>
-                         <Container className="text-center">
-                              <Fade triggerOnce>
-                                   <h1 className="serviceMainTitle">OUR VIDEOS</h1>
-                                   <div className="bottom"></div>
-                              </Fade>
+                         <section className="video-section py-5">
+                              <Container>
+                                   <div className="text-center mb-5">
+                                        <Fade triggerOnce>
+                                             <h1 className="section-title2">OUR VIDEOS</h1>
+                                             <div className="title-underline2"></div>
+                                             <p className="section-subtitle">Watch our latest video content</p>
+                                        </Fade>
+                                   </div>
 
-                              <Row>
-                                   <Col lg={6} md={6} sm={12} className="videText">
-                                        <Slide direction="left" triggerOnce>
-                                             <p className="serviceDescription text-justify">
-                                                  {typeof this.state.video_description === 'string'
-                                                       ? parse(this.state.video_description)
-                                                       : ""}
-                                             </p>
-                                        </Slide>
-                                   </Col>
+                                   <Row className="align-items-center">
+                                        <Col lg={6} md={6} sm={12} className="video-text-col">
+                                             <Slide direction="left" triggerOnce>
+                                                  <div className="video-description">
+                                                       {typeof this.state.video_description === 'string'
+                                                            ? parse(this.state.video_description)
+                                                            : "Discover our video content and learn more about what we do."}
+                                                  </div>
+                                             </Slide>
+                                        </Col>
 
-                                   <Col lg={6} md={6} sm={12} className="videoCard">
-                                        <Slide direction="right" triggerOnce>
-                                             <FontAwesomeIcon
-                                                  onClick={this.modalOpen}
-                                                  className="iconProject"
-                                                  icon={faVideoSlash}
-                                             />
-                                        </Slide>
-                                   </Col>
-                              </Row>
-                         </Container>
+                                        <Col lg={6} md={6} sm={12} className="video-player-col">
+                                             <Slide direction="right" triggerOnce>
+                                                  <div className="video-card" onClick={this.modalOpen}>
+                                                       <div className="video-overlay">
+                                                            <FontAwesomeIcon
+                                                                 className="play-icon"
+                                                                 icon={faPlay}
+                                                            />
+                                                            <span className="play-text">Watch Video</span>
+                                                       </div>
+                                                       <div className="video-bg"></div>
+                                                  </div>
+                                             </Slide>
+                                        </Col>
+                                   </Row>
+                              </Container>
+                         </section>
 
-                         <Modal size="lg" show={this.state.show} onHide={this.modalClose}>
-                              <Modal.Body>
+                         <Modal 
+                              size="lg" 
+                              show={this.state.show} 
+                              onHide={this.modalClose}
+                              className="video-modal"
+                              centered
+                         >
+                              <Modal.Header closeButton className="border-0">
+                                   <Modal.Title>Video</Modal.Title>
+                              </Modal.Header>
+                              <Modal.Body className="p-0">
                                    {this.state.video_url ? (
-                                        <Player src={this.state.video_url}>
-                                             <BigPlayButton position="center" />
-                                        </Player>
+                                        <div className="video-wrapper">
+                                             <Player src={this.state.video_url} fluid={false}>
+                                                  <BigPlayButton position="center" />
+                                             </Player>
+                                        </div>
                                    ) : (
-                                        <p>Video not available</p>
+                                        <div className="video-error">
+                                             <p>Video not available</p>
+                                        </div>
                                    )}
                               </Modal.Body>
-                              <Modal.Footer>
-                                   <Button variant="secondary" onClick={this.modalClose}>
+                              <Modal.Footer className="border-0">
+                                   <Button variant="primary" onClick={this.modalClose}>
                                         Close
                                    </Button>
                               </Modal.Footer>

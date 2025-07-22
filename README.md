@@ -1,70 +1,111 @@
-# Getting Started with Create React App
+# React.js + Laravel REST API Fullstack App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Fullstack web application built using **React.js** for the frontend and **Laravel** for the backend REST API. It demonstrates how to structure a real-world project with separate repositories for client and server, RESTful API integration, authentication, responsive UI, and modern UX features.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Live Demo
 
-### `npm start`
+Frontend: [https://frapi.get-virtual-admin.com](https://frapi.get-virtual-admin.com)
+Backend API: [https://rapi.get-virtual-admin.com](https://rapi.get-virtual-admin.com)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Repositories
 
-### `npm test`
+This project is divided into two repositories:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+🔹 **Frontend (React.js):**  
+GitHub: [https://github.com/MuhammadZulhusni/Frontend-React-App](https://github.com/MuhammadZulhusni/Frontend-React-App)
 
-### `npm run build`
+🔹 **Backend API (Laravel):**  
+GitHub: [https://github.com/MuhammadZulhusni/Backend-Laravel-Api](https://github.com/MuhammadZulhusni/Backend-Laravel-Api)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Features Overview
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Backend (Laravel REST API)
+- RESTful API using Laravel
+- Connected to a real MySQL database
+- Laravel Passport for API authentication
+- Laravel Jetstream for authentication scaffolding
+- Admin panel integration
+- Contact form handling
+- API error/failure handling
+- Fully deployable on shared/VPS server
 
-### `npm run eject`
+### Frontend (React.js)
+- Consumes Laravel REST API via Axios
+- Authentication using access tokens from Laravel Passport
+- Page animations and transitions
+- Loader and API error states
+- React plugins and modular architecture
+- Responsive layout (mobile-first)
+- Contact form integrated with backend API
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Tech Stack
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+| Frontend        | Backend       | Tools / Services |
+|-----------------|---------------|------------------|
+| React.js        | Laravel 12+    | Laravel Passport |
+| Tailwind / Bootstrap | MySQL    | Laravel Jetstream |
+| React Router    | REST API       | Axios             |
+| Vite / Webpack  | PHP 8+         | GitHub / Git      |
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+## Local Development Setup
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 1. Clone Repositories
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+# Clone Backend (Laravel)
+git clone https://github.com/your-username/laravel-api.git
 
-### Code Splitting
+# Clone Frontend (React)
+git clone https://github.com/your-username/react-frontend.git
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
 
-### Analyzing the Bundle Size
+### 2. Backend Setup (Laravel)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```bash
+cd project-name
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate
+php artisan passport:install
+php artisan serve
+```
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### 3. Frontend Setup (React.js)
 
-### Advanced Configuration
+```bash
+cd react-frontend
+npm install
+npm run dev
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+> Make sure to update the API URL in your React `.env` file:
+```
+VITE_API_BASE_URL=http://127.0.0.1:8000/api
+```
 
-### Deployment
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Authentication Flow
 
-### `npm run build` fails to minify
+- Backend uses **Laravel Passport** to issue access tokens
+- Frontend stores access tokens securely (e.g., in localStorage or HttpOnly cookies)
+- Protected routes and API calls require valid token
+- Users can register, login, logout, and access secured API endpoints
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+
